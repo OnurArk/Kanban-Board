@@ -1,0 +1,90 @@
+/* .btn {
+  appearance: none;
+  -webkit-appearance: none;
+
+  background-color: #212a3e;
+  color: white;
+  padding: 0.4rem 1rem;
+  font-size: 1rem;
+
+  cursor: pointer;
+}
+
+.btn:hover {
+  background-color: #394869;
+}
+
+.btn:active {
+  background-color: black;
+} */
+
+/* CSS */
+.btn {
+  --clr-neon: rgb(156, 235, 249);
+  --clr-bg: rgba(0, 0, 0, 0.485);
+
+  appearance: none;
+  -webkit-appearance: none;
+  border: none;
+
+  padding: 0.4em 1em;
+  border: var(--clr-neon) 0.125em solid;
+  border-radius: 0.25em;
+
+  font-size: 1rem;
+  font-weight: 500;
+  text-shadow: 0 0 0.125em hsl(0 0% 100% / 0.5), 0 0 0.3em var(--clr-neon);
+  box-shadow: inset 0 0 1em var(--clr-neon), 0 0 0.5em var(--clr-neon);
+
+  background-color: var(--clr-bg);
+  color: var(--clr-neon);
+
+  cursor: pointer;
+
+  position: relative;
+}
+
+.btn::before {
+  pointer-events: none;
+  content: '';
+  position: absolute;
+  background: var(--clr-neon);
+
+  top: 100%;
+  left: 0;
+  width: 100%;
+  height: 100%;
+
+  transform: perspective(1em) rotateX(35deg) scale(1, 0.25);
+  filter: blur(1.2em);
+  opacity: 0.8;
+}
+
+.btn::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+
+  box-shadow: 0 0 2em 0.4em var(--clr-neon);
+  opacity: 0;
+  background-color: rgba(41, 44, 229, 0.565);
+  z-index: -1;
+  transition: opacity 100ms linear;
+}
+
+.btn:hover,
+.btn:focus {
+  color: var(--clr-neon);
+}
+
+.btn:hover::before {
+  opacity: 1;
+}
+
+.btn:hover::after {
+  opacity: 1;
+}
+
+.btn:active {
+  --clr-neon: red;
+}

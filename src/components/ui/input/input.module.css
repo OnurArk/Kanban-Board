@@ -1,0 +1,56 @@
+.input-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0.4rem;
+}
+
+.label {
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.input {
+  /* reset input default */
+  appearance: none;
+  outline: none;
+  border: none;
+
+  padding: 0.4rem 0.7rem;
+  width: 13rem;
+  border-bottom: 1px solid #ffffff;
+  border-radius: 6px;
+  font: inherit;
+  background: #6c6ccc25;
+  color: inherit;
+  box-shadow: inset 0 0px 5px rgb(0, 0, 0);
+
+  transition: 0.3s ease;
+}
+
+.input:focus-visible {
+  outline: 1px solid #ffffff;
+}
+
+.input::placeholder {
+  color: inherit;
+  opacity: 0.6;
+}
+
+.invalid {
+  box-shadow: inset 0 -1px 10px white;
+  background: #ffc0c0;
+  color: #000000;
+}
+
+.invalid:-webkit-autofill,
+.invalid:-webkit-autofill:hover,
+.invalid:-webkit-autofill:focus,
+.invalid:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 30px #ffc0c0 inset !important;
+}
+
+.err {
+  color: rgb(228, 78, 78);
+}

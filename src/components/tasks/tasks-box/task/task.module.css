@@ -1,0 +1,117 @@
+.title {
+  color: rgb(232, 137, 21);
+}
+
+.title::first-letter {
+  text-transform: uppercase;
+}
+
+.task {
+  padding: 0.5rem;
+  background-color: #2452a8;
+
+  border-radius: 12px;
+
+  position: relative;
+  cursor: grab;
+  user-select: none;
+
+  box-shadow: 0px 7px 15px -2px rgb(0, 0, 0);
+  transition: all 0.4s ease;
+}
+
+.task:hover {
+  scale: 1.05;
+  box-shadow: 0px 9px 15px -4px rgb(254, 241, 215);
+  background: rgb(0, 0, 0) !important;
+}
+
+.task:hover .title {
+  color: rgb(232, 137, 21) !important;
+}
+
+.task:hover .description {
+  color: white !important;
+}
+
+.description {
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  word-break: break-word;
+}
+
+.edit-delete {
+  padding: 0.5rem;
+
+  border-radius: 0 12px 0 0;
+
+  display: none;
+  justify-content: center;
+
+  flex-wrap: wrap;
+  gap: 1rem;
+
+  position: absolute;
+  right: 0;
+  top: 0;
+
+  background-color: #c7cfde31;
+
+  cursor: auto;
+}
+
+.bin {
+  color: rgb(217, 12, 12);
+  font-size: 1.1rem;
+
+  cursor: pointer;
+}
+
+.edit {
+  color: rgb(253, 253, 253);
+  font-size: 1.1rem;
+
+  cursor: pointer;
+}
+
+.task:hover .edit-delete {
+  display: flex;
+}
+
+.edit-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+}
+
+.btns {
+  display: flex;
+  gap: 1rem;
+}
+
+.textarea {
+  border: none;
+  background-color: transparent;
+  resize: none;
+
+  width: 95%;
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
+  padding: 0;
+  /* Set box-sizing to border-box to include padding in the height calculation */
+  box-sizing: border-box;
+  /* Remove vertical scrollbar */
+  scrollbar-width: none;
+  /* Hide scrollbar in Firefox */
+  -ms-overflow-style: none;
+}
+
+/* Hide scrollbar in Webkit based browsers */
+.textarea::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  background-color: transparent;
+}

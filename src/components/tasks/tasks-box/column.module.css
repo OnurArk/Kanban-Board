@@ -1,0 +1,33 @@
+.tasks-container {
+  padding: 0.4rem;
+  min-width: 270px;
+  max-width: 500px;
+
+  flex: 1;
+  text-align: center;
+
+  background-color: rgba(240, 248, 255, 0.424);
+  transition: all 0.4s ease-in-out;
+}
+
+.tasks-container:hover {
+  box-shadow: 0 0 15px rgb(19, 146, 249);
+}
+
+.mainTitle {
+  margin-bottom: 0.8rem;
+  color: aliceblue;
+}
+
+.tasks {
+  padding: 1rem;
+  border-radius: 7px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  text-align: left;
+  background-color: #175ffaa3;
+  color: aliceblue;
+}
