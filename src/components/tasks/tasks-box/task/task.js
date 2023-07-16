@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { tasksAction } from '../../../../store/task-slice';
+import taskFetcher from '../../../../store/taskFetcher-action';
 
 import Button from '../../../ui/button/button';
 
@@ -10,7 +11,7 @@ import styles from './task.module.css';
 import { RiDeleteBin2Fill, RiEdit2Fill } from 'react-icons/ri';
 
 const Task = (props) => {
-  const { task, title } = props;
+  const { task, title, index } = props;
 
   const [isEditable, setIsEditable] = useState(false);
   const [updatedTaskText, setUpdatedTaskText] = useState('');
@@ -24,11 +25,21 @@ const Task = (props) => {
 
   const editTaskHandler = (id) => {
     dispatch(
-      tasksAction.editTask({
+      tasksAction.editTaskText({
         id,
         title,
         updatedTask: updatedTaskText,
       })
+    );
+
+    dispatch(
+      taskFetcher(
+        {
+          method: 'PATCH',
+          body: { ...task, description: updatedTaskText },
+        },
+        `${title}/${task.id}`
+      )
     );
     setIsEditable(false);
   };

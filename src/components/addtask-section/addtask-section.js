@@ -1,6 +1,7 @@
 import React, { useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
+import taskFetcher from '../../store/taskFetcher-action';
 import { tasksAction } from '../../store/task-slice';
 
 import Input from '../ui/input/input';
@@ -42,13 +43,6 @@ const InputsSection = () => {
       return;
     }
 
-    // produces random id
-    const timestamp = Date.now().toString();
-    const randomSuffix = Math.floor(Math.random() * 1000)
-      .toString()
-      .padStart(3, '0');
-    const id = timestamp + randomSuffix;
-
     // produce random task background
     const letters = '0123456789ABCDEF';
     let color = '#';
@@ -57,7 +51,7 @@ const InputsSection = () => {
     }
 
     // determine text color and title color based on background color brightness
-    const brightnessThreshold = 128; // Adjust this threshold to your preference
+    const brightnessThreshold = 128;
     const r = parseInt(color.substring(1, 3), 16);
     const g = parseInt(color.substring(3, 5), 16);
     const b = parseInt(color.substring(5, 7), 16);
@@ -65,17 +59,31 @@ const InputsSection = () => {
 
     const textColor = brightness > brightnessThreshold ? '#000000' : '#FFFFFF';
 
+    const newTask = {
+      title,
+      description,
+      status,
+      backgroundColor: color,
+      textColor,
+    };
+
     // sending to redux
+    // dispatch(tasksAction.addNewTask(newTask));
+    // sending to backend
+
     dispatch(
-      tasksAction.addNewTask({
-        title,
-        description,
-        status,
-        id,
-        backgroundColor: color,
-        textColor,
-      })
+      taskFetcher(
+        {
+          method: 'POST',
+          body: newTask,
+        },
+        newTask.status
+      )
     );
+
+    // reavaluate
+    dispatch(taskFetcher({}));
+
     // Reset the form fields
     titleRef.current.value = '';
     descriptionRef.current.value = '';

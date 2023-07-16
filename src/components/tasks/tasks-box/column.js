@@ -34,6 +34,7 @@ const Column = (props) => {
                         <Task
                           task={task}
                           title={props.title}
+                          index={index}
                           id={task.id}
                           innerRef={provided.innerRef}
                           draggableProps={provided.draggableProps}

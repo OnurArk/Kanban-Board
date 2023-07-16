@@ -8,45 +8,18 @@ const tasksSlice = createSlice({
     done: [],
   },
   reducers: {
-    addNewTask(state, action) {
-      const task = action.payload;
+    // addNewTask(state, action) {
+    //   const task = action.payload;
 
-      if (task.status === 'todo') {
-        state.todo.push(task);
-      }
-      if (task.status === 'progress') {
-        state.progress.push(task);
-      }
-      if (task.status === 'done') {
-        state.done.push(task);
-      }
-    },
+    //   state[task.status].push(task);
+    // },
     removeTask(state, action) {
       const { id, title } = action.payload;
-
-      if (title === 'todo') {
-        state.todo = state.todo.filter((task) => task.id !== id);
-      }
-      if (title === 'progress') {
-        state.progress = state.progress.filter((task) => task.id !== id);
-      }
-      if (title === 'done') {
-        state.done = state.done.filter((task) => task.id !== id);
-      }
+      state[title] = state[title].filter((task) => task.id !== id);
     },
-    editTask(state, action) {
+    editTaskText(state, action) {
       const { id, title, updatedTask } = action.payload;
-
-      let taskToUpdate;
-      if (title === 'todo') {
-        taskToUpdate = state.todo.find((task) => task.id === id);
-      }
-      if (title === 'progress') {
-        taskToUpdate = state.progress.find((task) => task.id === id);
-      }
-      if (title === 'done') {
-        taskToUpdate = state.done.find((task) => task.id === id);
-      }
+      const taskToUpdate = state[title].find((task) => task.id === id);
 
       if (taskToUpdate) {
         taskToUpdate.description = updatedTask;
@@ -55,29 +28,37 @@ const tasksSlice = createSlice({
     updateTasks(state, action) {
       const { sourceId, sourceIndex, destinationId, destinationIndex } =
         action.payload;
-      let movedTask;
 
-      // removing
-      if (sourceId === 'todo') {
-        movedTask = state.todo.splice(sourceIndex, 1)[0];
-      }
-      if (sourceId === 'progress') {
-        movedTask = state.progress.splice(sourceIndex, 1)[0];
-      }
-      if (sourceId === 'done') {
-        movedTask = state.done.splice(sourceIndex, 1)[0];
-      }
+      // removing task also saving removed tasked
+      const movedTask = state[sourceId].splice(sourceIndex, 1)[0];
 
-      // adding
-      if (destinationId === 'todo') {
-        state.todo.splice(destinationIndex, 0, movedTask);
+      // adding new position the removed task
+      state[destinationId].splice(destinationIndex, 0, movedTask);
+    },
+    getAllTasks(state, action) {
+      const allTasksData = action.payload;
+      console.log(Object.values(allTasksData.todo));
+
+      // for loob al key id olsun önüne de todo falan ekle
+
+      const todoTasks = [];
+      const progressTasks = [];
+      const doneTasks = [];
+
+      for (const key in allTasksData.todo) {
+        todoTasks.push({ ...allTasksData.todo[key], id: key });
       }
-      if (destinationId === 'progress') {
-        state.progress.splice(destinationIndex, 0, movedTask);
+      for (const key in allTasksData.progress) {
+        progressTasks.push({ ...allTasksData.progress[key], id: key });
       }
-      if (destinationId === 'done') {
-        state.done.splice(destinationIndex, 0, movedTask);
+      for (const key in allTasksData.done) {
+        doneTasks.push({ ...allTasksData.done[key], id: key });
       }
+      console.log(doneTasks);
+
+      state.todo = todoTasks;
+      state.progress = progressTasks;
+      state.done = doneTasks;
     },
   },
 });
