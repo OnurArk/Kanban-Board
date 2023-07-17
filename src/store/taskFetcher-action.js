@@ -21,9 +21,6 @@ const taskFetcher = (requestConfig, endpoint) => {
 
       const data = await response.json();
 
-      console.log(data);
-      console.log(requestConfig.method);
-
       if (!requestConfig.method) {
         dispatch(tasksAction.getAllTasks(data));
       }

@@ -18,6 +18,8 @@
 
   box-shadow: 0px 7px 15px -2px rgb(0, 0, 0);
   transition: all 0.4s ease;
+
+  z-index: 5;
 }
 
 .task:hover {
@@ -33,11 +35,22 @@
 .task:hover .description {
   color: white !important;
 }
+.task:hover .task::after {
+  opacity: 0;
+}
 
 .description {
   overflow-wrap: break-word;
   word-wrap: break-word;
   word-break: break-word;
+}
+
+.edit-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
 }
 
 .edit-delete {
@@ -59,6 +72,9 @@
 
   cursor: auto;
 }
+.task:hover .edit-delete {
+  display: flex;
+}
 
 .bin {
   color: rgb(217, 12, 12);
@@ -74,21 +90,13 @@
   cursor: pointer;
 }
 
-.task:hover .edit-delete {
-  display: flex;
-}
-
-.edit-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 1rem;
-}
-
 .btns {
   display: flex;
   gap: 1rem;
+}
+
+.updateBtn:active {
+  --clr-neon: rgb(54, 239, 37);
 }
 
 .textarea {

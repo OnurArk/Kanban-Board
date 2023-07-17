@@ -93,7 +93,10 @@ const Task = (props) => {
               <Button type='button' onClick={toggleEdit}>
                 Cancel
               </Button>
-              <Button onClick={() => editTaskTextHandler(task.id)}>
+              <Button
+                onClick={() => editTaskTextHandler(task.id)}
+                className={styles.updateBtn}
+              >
                 Update
               </Button>
             </div>

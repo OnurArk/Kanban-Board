@@ -1,6 +1,7 @@
 import React, { useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
+import api from '../ui/http/api';
 import { tasksAction } from '../../store/task-slice';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -23,7 +24,7 @@ const InputsSection = () => {
 
   const dispatch = useDispatch();
 
-  const submitHandler = (event) => {
+  const submitHandler = async (event) => {
     event.preventDefault();
 
     const title = titleRef.current.value;
@@ -75,8 +76,24 @@ const InputsSection = () => {
       textColor,
     };
 
+    const { requestFetch } = api();
+
+    const data = await requestFetch(
+      {
+        method: 'POST',
+        body: newTask,
+      },
+      newTask.status
+    );
+    console.log(data);
+
     // sending to redux dor smoth transition
-    dispatch(tasksAction.addNewTask(newTask));
+    dispatch(
+      tasksAction.addNewTask({
+        ...newTask,
+        positionId: data.name ? data.name : null,
+      })
+    );
 
     // Reset the form fields
     titleRef.current.value = '';

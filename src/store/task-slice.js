@@ -15,14 +15,10 @@ const tasksSlice = createSlice({
   reducers: {
     addNewTask(state, action) {
       const task = action.payload;
-      const data = requestFetch(
-        {
-          method: 'POST',
-          body: task,
-        },
-        task.status
-      );
-      state[task.status].push({ ...task, positionId: data.name });
+      console.log(task);
+      console.dir(task);
+
+      state[task.status].push(task);
     },
     removeTask(state, action) {
       const { id, title } = action.payload;
