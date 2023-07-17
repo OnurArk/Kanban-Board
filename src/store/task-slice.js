@@ -38,11 +38,7 @@ const tasksSlice = createSlice({
 
       // removing task also saving removed tasked
       const movedTask = state[sourceId].splice(sourceIndex, 1)[0];
-      const data = requestFetch(
-        { method: 'DELETE' },
-        `${sourceId}/${movedTask.positionId}`
-      );
-      console.log(data);
+      requestFetch({ method: 'DELETE' }, `${sourceId}/${movedTask.positionId}`);
 
       // adding new position the removed task
       state[destinationId].splice(destinationIndex, 0, movedTask);
