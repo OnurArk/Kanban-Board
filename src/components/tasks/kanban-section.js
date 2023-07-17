@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { DragDropContext } from 'react-beautiful-dnd';
 
 import { tasksAction } from '../../store/task-slice';
+import taskFetcher from '../../store/taskFetcher-action';
 
 import Column from './tasks-box/column';
 
@@ -16,6 +17,8 @@ const KanbanSection = () => {
   const onDragEnd = (result) => {
     const { source, destination } = result;
     if (!destination) return;
+
+    // dispatch(taskFetcher());
 
     dispatch(
       tasksAction.updateTasks({

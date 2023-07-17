@@ -1,14 +1,18 @@
 import React, { useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
-import taskFetcher from '../../store/taskFetcher-action';
 import { tasksAction } from '../../store/task-slice';
+import { v4 as uuidv4 } from 'uuid';
 
 import Input from '../ui/input/input';
 import Button from '../ui/button/button';
 
 import styles from './addtask-section.module.css';
 import { HiOutlineChevronDoubleDown } from 'react-icons/hi';
+
+function generateRandomId() {
+  return uuidv4();
+}
 
 const InputsSection = () => {
   const [err, setErr] = useState(null);
@@ -43,6 +47,9 @@ const InputsSection = () => {
       return;
     }
 
+    // produce id for each task
+    const randomId = generateRandomId();
+
     // produce random task background
     const letters = '0123456789ABCDEF';
     let color = '#';
@@ -64,25 +71,12 @@ const InputsSection = () => {
       description,
       status,
       backgroundColor: color,
+      id: randomId,
       textColor,
     };
 
-    // sending to redux
-    // dispatch(tasksAction.addNewTask(newTask));
-    // sending to backend
-
-    dispatch(
-      taskFetcher(
-        {
-          method: 'POST',
-          body: newTask,
-        },
-        newTask.status
-      )
-    );
-
-    // reavaluate
-    dispatch(taskFetcher({}));
+    // sending to redux dor smoth transition
+    dispatch(tasksAction.addNewTask(newTask));
 
     // Reset the form fields
     titleRef.current.value = '';

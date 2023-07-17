@@ -11,7 +11,7 @@ import styles from './task.module.css';
 import { RiDeleteBin2Fill, RiEdit2Fill } from 'react-icons/ri';
 
 const Task = (props) => {
-  const { task, title, index } = props;
+  const { task, title } = props;
 
   const [isEditable, setIsEditable] = useState(false);
   const [updatedTaskText, setUpdatedTaskText] = useState('');
@@ -20,10 +20,23 @@ const Task = (props) => {
   const dispatch = useDispatch();
 
   const removeTaskHandler = (id) => {
+    dispatch(taskFetcher({ method: 'DELETE' }, `${title}/${task.positionId}`));
+
     dispatch(tasksAction.removeTask({ id, title }));
   };
 
-  const editTaskHandler = (id) => {
+  const editTaskTextHandler = (id) => {
+    dispatch(
+      taskFetcher(
+        {
+          method: 'PATCH',
+          body: { ...task, description: updatedTaskText },
+        },
+        `${title}/${task.positionId}`
+      )
+    );
+
+    // smoth transition
     dispatch(
       tasksAction.editTaskText({
         id,
@@ -32,24 +45,16 @@ const Task = (props) => {
       })
     );
 
-    dispatch(
-      taskFetcher(
-        {
-          method: 'PATCH',
-          body: { ...task, description: updatedTaskText },
-        },
-        `${title}/${task.id}`
-      )
-    );
     setIsEditable(false);
   };
 
-  const toggleEdit = () => {
+  const toggleEdit = (e) => {
     setIsEditable((pre) => !pre);
     setUpdatedTaskText(task.description);
+    setTextAreaHeight(e.target.scrollHeight);
   };
 
-  const handleTaskTextChange = (e) => {
+  const handleTaskTextOnChange = (e) => {
     setUpdatedTaskText(e.target.value);
     setTextAreaHeight(e.target.scrollHeight);
   };
@@ -76,9 +81,9 @@ const Task = (props) => {
         {isEditable && (
           <div className={styles['edit-container']}>
             <textarea
-              onKeyUp={handleTaskTextChange}
+              onKeyUp={handleTaskTextOnChange}
               value={updatedTaskText}
-              onChange={handleTaskTextChange}
+              onChange={handleTaskTextOnChange}
               className={styles.textarea}
               style={{ cursor: 'auto', height: `${textAreaHeight}px` }}
             >
@@ -88,7 +93,9 @@ const Task = (props) => {
               <Button type='button' onClick={toggleEdit}>
                 Cancel
               </Button>
-              <Button onClick={() => editTaskHandler(task.id)}>Update</Button>
+              <Button onClick={() => editTaskTextHandler(task.id)}>
+                Update
+              </Button>
             </div>
           </div>
         )}
