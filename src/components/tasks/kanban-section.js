@@ -12,7 +12,6 @@ const KanbanSection = () => {
   const { todo, progress, done } = useSelector((state) => state.tasks);
 
   const dispatch = useDispatch();
-  console.log(progress);
 
   const onDragEnd = (result) => {
     const { source, destination } = result;

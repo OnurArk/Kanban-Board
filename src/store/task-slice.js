@@ -38,17 +38,12 @@ const tasksSlice = createSlice({
       const movedTask = state[sourceId].splice(sourceIndex, 1)[0];
       requestFetch({ method: 'DELETE' }, `${sourceId}/${movedTask.positionId}`);
 
-      console.log(JSON.parse(JSON.stringify(movedTask)));
-      console.log(JSON.parse(JSON.stringify(state[sourceId])));
-
       // adding new position the removed task
       state[destinationId].splice(destinationIndex, 0, movedTask);
       requestFetch(
         { method: 'PUT', body: state[destinationId] },
         `${destinationId}`
       ); // This is only pushing end of it
-
-      console.log(JSON.parse(JSON.stringify(state[destinationId])));
     },
     getAllTasks(state, action) {
       const allTasksData = action.payload;
@@ -58,12 +53,14 @@ const tasksSlice = createSlice({
       const doneTasks = [];
 
       for (const key in allTasksData.todo) {
-        if (allTasksData.todo[key].id) {
+        console.log({ ...allTasksData.todo[key], positionId: key });
+
+        if (allTasksData.todo[key]?.id) {
           todoTasks.push({ ...allTasksData.todo[key], positionId: key });
         }
       }
       for (const key in allTasksData.progress) {
-        if (allTasksData.progress[key].id) {
+        if (allTasksData.progress[key]?.id) {
           progressTasks.push({
             ...allTasksData.progress[key],
             positionId: key,
@@ -71,11 +68,10 @@ const tasksSlice = createSlice({
         }
       }
       for (const key in allTasksData.done) {
-        if (allTasksData.done[key].id) {
+        if (allTasksData.done[key]?.id) {
           doneTasks.push({ ...allTasksData.done[key], positionId: key });
         }
       }
-
       state.todo = todoTasks;
       state.progress = progressTasks;
       state.done = doneTasks;
