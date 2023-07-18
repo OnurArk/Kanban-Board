@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 
-import taskFetcher from './store/taskFetcher-action';
+import taskFetcher from './store/task-action';
 
 import InputsSection from './components/addtask-section/addtask-section';
 import KanbanSection from './components/tasks/kanban-section';

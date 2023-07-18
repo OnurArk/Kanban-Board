@@ -4,7 +4,7 @@ import { DragDropContext } from 'react-beautiful-dnd';
 
 import { tasksAction } from '../../store/task-slice';
 
-import Column from './tasks-box/column';
+import Column from './column/column';
 
 import styles from './kanban-section.module.css';
 
@@ -30,9 +30,9 @@ const KanbanSection = () => {
   return (
     <div className={styles['tasks-container']}>
       <DragDropContext onDragEnd={onDragEnd}>
-        <Column title='todo' tasks={todo} />
-        <Column title='progress' tasks={progress} />
-        <Column title='done' tasks={done} />
+        <Column status='todo' tasks={todo} />
+        <Column status='progress' tasks={progress} />
+        <Column status='done' tasks={done} />
       </DragDropContext>
     </div>
   );

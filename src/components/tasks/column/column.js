@@ -8,12 +8,12 @@ import styles from './column.module.css';
 
 const Column = (props) => {
   return (
-    <Droppable droppableId={props.title}>
+    <Droppable droppableId={props.status}>
       {(provided, snapshot) => {
         return (
           <div className={styles['tasks-container']}>
             <h3 className={styles.mainTitle}>
-              {props.title.charAt(0).toUpperCase() + props.title.slice(1)}
+              {props.status.charAt(0).toUpperCase() + props.status.slice(1)}
             </h3>
             <div
               ref={provided.innerRef}
@@ -33,7 +33,7 @@ const Column = (props) => {
                       return (
                         <Task
                           task={task}
-                          title={props.title}
+                          status={props.status}
                           index={index}
                           innerRef={provided.innerRef}
                           draggableProps={provided.draggableProps}

@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { tasksAction } from '../../../../store/task-slice';
-import taskFetcher from '../../../../store/taskFetcher-action';
+import taskFetcher from '../../../../store/task-action';
 
 import Button from '../../../ui/button/button';
 
@@ -11,7 +11,7 @@ import styles from './task.module.css';
 import { RiDeleteBin2Fill, RiEdit2Fill } from 'react-icons/ri';
 
 const Task = (props) => {
-  const { task, title } = props;
+  const { task, status } = props;
 
   const [isEditable, setIsEditable] = useState(false);
   const [updatedTaskText, setUpdatedTaskText] = useState('');
@@ -20,9 +20,9 @@ const Task = (props) => {
   const dispatch = useDispatch();
 
   const removeTaskHandler = (id) => {
-    dispatch(taskFetcher({ method: 'DELETE' }, `${title}/${task.positionId}`));
+    dispatch(taskFetcher({ method: 'DELETE' }, `${status}/${task.positionId}`));
 
-    dispatch(tasksAction.removeTask({ id, title }));
+    dispatch(tasksAction.removeTask({ id, status }));
   };
 
   const editTaskTextHandler = (id) => {
@@ -32,7 +32,7 @@ const Task = (props) => {
           method: 'PATCH',
           body: { ...task, description: updatedTaskText },
         },
-        `${title}/${task.positionId}`
+        `${status}/${task.positionId}`
       )
     );
 
@@ -40,7 +40,7 @@ const Task = (props) => {
     dispatch(
       tasksAction.editTaskText({
         id,
-        title,
+        status,
         updatedTask: updatedTaskText,
       })
     );

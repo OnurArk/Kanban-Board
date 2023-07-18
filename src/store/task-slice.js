@@ -19,12 +19,12 @@ const tasksSlice = createSlice({
       state[task.status].push(task);
     },
     removeTask(state, action) {
-      const { id, title } = action.payload;
-      state[title] = state[title].filter((task) => task.id !== id);
+      const { id, status } = action.payload;
+      state[status] = state[status].filter((task) => task.id !== id);
     },
     editTaskText(state, action) {
-      const { id, title, updatedTask } = action.payload;
-      const taskToUpdate = state[title].find((task) => task.id === id);
+      const { id, status, updatedTask } = action.payload;
+      const taskToUpdate = state[status].find((task) => task.id === id);
 
       if (taskToUpdate) {
         taskToUpdate.description = updatedTask;
@@ -53,8 +53,6 @@ const tasksSlice = createSlice({
       const doneTasks = [];
 
       for (const key in allTasksData.todo) {
-        console.log({ ...allTasksData.todo[key], positionId: key });
-
         if (allTasksData.todo[key]?.id) {
           todoTasks.push({ ...allTasksData.todo[key], positionId: key });
         }
