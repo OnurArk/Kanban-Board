@@ -11,7 +11,8 @@ import styles from './task.module.css';
 import { RiDeleteBin2Fill, RiEdit2Fill } from 'react-icons/ri';
 
 const Task = (props) => {
-  const { task, title } = props;
+  const { task, title, id } = props;
+  console.log(id);
 
   const [isEditable, setIsEditable] = useState(false);
   const [updatedTaskText, setUpdatedTaskText] = useState('');
@@ -65,7 +66,10 @@ const Task = (props) => {
       {...props.draggableProps}
       {...props.dragHandleProps}
     >
-      <div style={{ background: task.backgroundColor }} className={styles.task}>
+      <div
+        style={{ background: task.backgroundColor }}
+        className={styles['task-container']}
+      >
         <h3 className={styles.title} style={{ color: task.textColor }}>
           {task.title}
         </h3>

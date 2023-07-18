@@ -1,12 +1,4 @@
-.title {
-  color: rgb(232, 137, 21);
-}
-
-.title::first-letter {
-  text-transform: uppercase;
-}
-
-.task {
+.task-container {
   padding: 0.5rem;
   background-color: #2452a8;
 
@@ -16,27 +8,36 @@
   cursor: grab;
   user-select: none;
 
-  box-shadow: 0px 7px 15px -2px rgb(0, 0, 0);
+  box-shadow: 0px 9px 15px -4px rgb(0, 0, 0);
+
   transition: all 0.4s ease;
 
   z-index: 5;
 }
 
-.task:hover {
+.task-container:hover {
   scale: 1.05;
   box-shadow: 0px 9px 15px -4px rgb(254, 241, 215);
   background: rgb(0, 0, 0) !important;
 }
 
-.task:hover .title {
+.task-container:hover .title {
   color: rgb(232, 137, 21) !important;
 }
 
-.task:hover .description {
+.task-container:hover .description {
   color: white !important;
 }
-.task:hover .task::after {
+.task-container:hover .task-container::after {
   opacity: 0;
+}
+
+.title {
+  color: rgb(232, 137, 21);
+}
+
+.title::first-letter {
+  text-transform: uppercase;
 }
 
 .description {
@@ -72,7 +73,7 @@
 
   cursor: auto;
 }
-.task:hover .edit-delete {
+.task-container:hover .edit-delete {
   display: flex;
 }
 
