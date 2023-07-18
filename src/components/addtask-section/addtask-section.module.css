@@ -77,3 +77,24 @@
 .icon {
   color: white;
 }
+
+.addTaskBtn {
+  user-select: none;
+}
+
+@media (max-width: 52.875rem) {
+  .addTaskBtn {
+    margin: auto;
+  }
+}
+
+@media (max-width: 45.5rem) {
+  .container {
+    justify-content: center;
+  }
+  .addTaskBtn {
+    margin: 0;
+    margin-left: 3rem;
+    margin-right: 3rem;
+  }
+}

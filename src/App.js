@@ -6,6 +6,8 @@ import taskFetcher from './store/taskFetcher-action';
 import InputsSection from './components/addtask-section/addtask-section';
 import KanbanSection from './components/tasks/kanban-section';
 
+import styles from './App.module.css';
+
 function App() {
   const dispatch = useDispatch();
 
@@ -14,7 +16,7 @@ function App() {
   }, [dispatch]);
 
   return (
-    <div>
+    <div className={styles.app}>
       <InputsSection />
       <KanbanSection />
     </div>

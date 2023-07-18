@@ -135,7 +135,7 @@ const InputsSection = () => {
         </div>
       </div>
 
-      <Button>Add Task</Button>
+      <Button className={styles.addTaskBtn}>Add Task</Button>
     </form>
   );
 };
