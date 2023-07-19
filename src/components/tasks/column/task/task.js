@@ -84,6 +84,7 @@ const Task = (props) => {
         {isEditable && (
           <div className={styles['edit-container']}>
             <textarea
+              onDoubleClick={toggleEdit}
               onKeyUp={handleTaskTextOnChange}
               value={updatedTaskText}
               onChange={handleTaskTextOnChange}
