@@ -34,16 +34,31 @@ const tasksSlice = createSlice({
       const { sourceId, sourceIndex, destinationId, destinationIndex } =
         action.payload;
 
-      // removing task also saving removed tasked
       const movedTask = state[sourceId].splice(sourceIndex, 1)[0];
-      requestFetch({ method: 'DELETE' }, `${sourceId}/${movedTask.positionId}`);
 
-      // adding new position the removed task
-      state[destinationId].splice(destinationIndex, 0, movedTask);
-      requestFetch(
-        { method: 'PUT', body: state[destinationId] },
-        `${destinationId}`
-      ); // This is only pushing end of it
+      if (sourceId === destinationId) {
+        // when status of source and destination is same no need to delete
+
+        state[destinationId].splice(destinationIndex, 0, movedTask);
+        requestFetch(
+          { method: 'PUT', body: state[destinationId] },
+          `${destinationId}`
+        );
+      } else {
+        // removing task also saving removed tasked
+
+        requestFetch(
+          { method: 'DELETE' },
+          `${sourceId}/${movedTask.positionId}`
+        );
+
+        // adding new position the removed task
+        state[destinationId].splice(destinationIndex, 0, movedTask);
+        requestFetch(
+          { method: 'PUT', body: state[destinationId] },
+          `${destinationId}`
+        ); // This is only pushing end of it
+      }
     },
     getAllTasks(state, action) {
       const allTasksData = action.payload;
