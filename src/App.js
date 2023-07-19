@@ -12,6 +12,7 @@ function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    // to get tasks data initally
     dispatch(taskFetcher({}));
   }, [dispatch]);
 
