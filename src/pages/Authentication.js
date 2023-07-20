@@ -37,6 +37,19 @@ export async function action({ request }) {
   const password = data.get('password');
   const confirmPassword = data.get('confirm-password');
 
+  // Validation
+
+  if (
+    typeof email !== 'string' ||
+    !email.includes('@') ||
+    !email.includes('.com')
+  ) {
+    toActionData.errMessage = 'Email address must contain @ and .com';
+    toActionData.errType
+      ? toActionData.errType.push('email')
+      : (toActionData.errType = ['email']);
+  }
+
   if (mode === 'signup') {
     if (!confirmPassword || !password) {
       toActionData.errMessage = 'You need to type!';
@@ -44,13 +57,13 @@ export async function action({ request }) {
         ? toActionData.errType.push('password')
         : (toActionData.errType = ['password']);
     }
-  }
 
-  if (confirmPassword && password !== confirmPassword) {
-    toActionData.errMessage = 'Passwords did not match!';
-    toActionData.errType
-      ? toActionData.errType.push('password')
-      : (toActionData.errType = ['password']);
+    if (confirmPassword && password !== confirmPassword) {
+      toActionData.errMessage = 'Passwords did not match!';
+      toActionData.errType
+        ? toActionData.errType.push('password')
+        : (toActionData.errType = ['password']);
+    }
   }
 
   if (typeof password !== 'string' || password.length < 6) {
@@ -60,9 +73,12 @@ export async function action({ request }) {
       : (toActionData.errType = ['password']);
   }
 
+  // sending errors and types back to handle with useActionData
   if (Object.keys(toActionData).length) {
     return toActionData;
   }
+
+  // Sending request
 
   if (mode === 'signup') {
     try {
@@ -70,22 +86,7 @@ export async function action({ request }) {
       toActionData.isSucceed = true;
       return redirect('/');
     } catch (err) {
-      console.dir(err);
-      if (
-        err.customData &&
-        err.customData._tokenResponse &&
-        err.customData._tokenResponse.error
-      ) {
-        toActionData.errMessage =
-          err.customData._tokenResponse.error?.errors[0]?.message.replace(
-            /_/g,
-            ' '
-          );
-      } else {
-        err.message = err.message.replace('Firebase: ', '');
-        err.message = err.message.replace(/ *\([^)]*\) */g, '');
-        toActionData.errMessage = err.message;
-      }
+      toActionData.errMessage = err.message;
 
       return toActionData;
     }
@@ -96,8 +97,6 @@ export async function action({ request }) {
       // login method
       return redirect('/');
     } catch (err) {
-      err.message = err.message.replace('Firebase: ', '');
-      err.message = err.message.replace(/ *\([^)]*\) */g, '');
       if (err.message.trim() === 'Error.') {
         toActionData.errMessage = 'Check your Email and Password';
       } else {
@@ -107,4 +106,7 @@ export async function action({ request }) {
       return toActionData;
     }
   }
+
+  // default behavier
+  return redirect('/authentication');
 }

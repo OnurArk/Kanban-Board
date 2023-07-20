@@ -13,7 +13,7 @@ import taskFetcher from './store/task-action';
 
 import RootLayout from './pages/RootLayout';
 import Home from './pages/Home';
-import Authentication from './pages/Authentication';
+import Authentication, { action as authAction } from './pages/Authentication';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -21,7 +21,11 @@ const router = createBrowserRouter(
       <Route index element={<Navigate replace key={'toHome'} to='/home' />} />
       <Route path='home' id='home-page' element={<Home />} />
 
-      <Route path='authentication' element={<Authentication />} />
+      <Route
+        path='authentication'
+        element={<Authentication />}
+        action={authAction}
+      />
     </Route>
   )
 );
