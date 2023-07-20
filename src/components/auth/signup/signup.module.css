@@ -1,0 +1,47 @@
+.signup-container {
+  min-height: calc(100vh - 4.5rem);
+  padding: 1.5rem 3rem;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+
+  background: linear-gradient(to bottom, black, #b1050592 30%, aliceblue);
+  color: rgb(255, 255, 255);
+  transition: all 0.4s ease;
+}
+
+.sideTitle {
+}
+
+.link {
+  font-weight: 500;
+  color: #783d3dfd;
+}
+
+.link:active {
+  color: rgb(0, 0, 0);
+}
+
+.btn {
+  --clr-neon: #b10505b1;
+  --clr-bg: rgba(149, 106, 106, 0.485);
+  color: rgb(255, 255, 255);
+}
+
+.btn:hover {
+  --clr-neon: #ff0c0cb1;
+}
+
+.btn:active {
+  --clr-neon: #0cffa2b1;
+  --clr-bg: rgba(160, 159, 183, 0.485);
+}
+
+@media (min-width: 30rem) {
+  .login-container {
+    padding: 1.5rem 5rem;
+  }
+}

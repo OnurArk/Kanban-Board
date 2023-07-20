@@ -10,10 +10,11 @@ const Authentication = () => {
   const [seatchParams] = useSearchParams();
 
   const isSignup = seatchParams.get('mode') === 'signup';
+  console.log(isSignup);
 
   return (
     <div className={styles['auth-container']}>
-      <Login />
+      {!isSignup && <Login />}
       {isSignup && <Signup />}
     </div>
   );

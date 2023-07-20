@@ -9,8 +9,16 @@ const svgFooter =
 const Footer = () => {
   const locationData = useLocation();
   const isInAuth = locationData.pathname === '/authentication';
+  console.log(locationData.search);
 
-  const style = {};
+  const searchParams = new URLSearchParams(locationData.search);
+
+  const isSignup = searchParams.get('mode') === 'signup';
+
+  const style = {
+    backgroundColor: isInAuth ? (isSignup ? 'black' : '#5B6AB7') : null,
+    color: isInAuth ? 'white' : null,
+  };
 
   return (
     <div className={styles['footer-container']} style={style}>

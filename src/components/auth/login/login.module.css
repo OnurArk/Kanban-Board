@@ -1,11 +1,11 @@
 .login-container {
+  min-height: calc(100vh - 4.5rem);
   padding: 1.5rem 3rem;
-
-  border-radius: 10px;
 
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   gap: 1rem;
 
   background: linear-gradient(to bottom, black, #051cb192 30%, aliceblue);
@@ -13,7 +13,7 @@
   transition: all 0.4s ease;
 }
 
-.helloText {
+.sideTitle {
 }
 
 .link {
@@ -33,6 +33,11 @@
 
 .btn:hover {
   --clr-neon: #0c2cffb1;
+}
+
+.btn:active {
+  --clr-neon: #0cffa2b1;
+  --clr-bg: rgba(160, 159, 183, 0.485);
 }
 
 @media (min-width: 30rem) {
