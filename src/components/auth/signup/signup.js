@@ -15,12 +15,12 @@ const Signup = () => {
   return (
     <div className={styles['signup-container']}>
       <h1>Sign Up</h1>
-      <h4 className={styles.sideTitle}>Join Dark Side!</h4>
+      <h4>Join the Dark Side!</h4>
       <Input
         name='email'
         type='email'
         placeholder='Example: mail@mail'
-        invalid={actionData?.errType?.includes('email') ? true : false}
+        err={actionData?.errType}
         autoComplete='email'
       >
         New Email
@@ -29,7 +29,7 @@ const Signup = () => {
         name='password'
         type='password'
         placeholder='At least 6 characters'
-        invalid={actionData?.errType?.includes('password') ? true : false}
+        err={actionData?.errType}
         autoComplete='new-password'
       >
         New Password
@@ -38,7 +38,7 @@ const Signup = () => {
         name='confirm-password'
         type='password'
         placeholder='Confirm New Password'
-        invalid={actionData?.errType?.includes('password') ? true : false}
+        err={actionData?.errType}
         autoComplete='new-password'
       >
         Confirm Password
@@ -48,7 +48,7 @@ const Signup = () => {
       </Link>
       <div className={styles.btns}>
         <Button disabled={isSubmitting} className={styles.btn}>
-          {isSubmitting ? 'Submitting...' : 'Login'}
+          {isSubmitting ? 'Submitting...' : 'Signup'}
         </Button>
       </div>
     </div>

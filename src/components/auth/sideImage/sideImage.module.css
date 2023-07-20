@@ -1,0 +1,56 @@
+.side-auth {
+  padding: 0 2rem;
+  flex: 1.1;
+
+  background-color: rgb(28, 28, 28);
+  background-image: var(--url);
+  background-position: top;
+  background-size: cover;
+  background-repeat: no-repeat;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  position: relative;
+  z-index: 100;
+
+  filter: contrast(80%);
+
+  transition: all 0.3s ease;
+}
+
+.text-container {
+  padding: 2rem;
+  border-radius: 10px;
+
+  text-align: center;
+  font-size: 1.2rem;
+  font-weight: 500;
+
+  user-select: none;
+
+  background-color: rgba(0, 0, 0, 0.518);
+}
+
+.title {
+  color: var(--titleColor);
+  text-shadow: 0 0 5px rgb(0, 0, 0);
+  margin-bottom: 1rem;
+}
+
+.textSign {
+  color: rgb(255, 255, 255);
+  text-shadow: 0 0 5px rgb(143, 142, 142);
+}
+
+.textLog {
+  color: rgb(255, 255, 255);
+  text-shadow: 0 0 5px rgb(143, 142, 142);
+}
+
+@media (max-width: 900px) {
+  .side-auth {
+    display: none;
+  }
+}

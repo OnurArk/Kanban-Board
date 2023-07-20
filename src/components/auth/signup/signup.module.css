@@ -11,9 +11,8 @@
   background: linear-gradient(to bottom, black, #b1050592 30%, aliceblue);
   color: rgb(255, 255, 255);
   transition: all 0.4s ease;
-}
 
-.sideTitle {
+  flex: 1;
 }
 
 .link {

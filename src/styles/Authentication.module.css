@@ -1,9 +1,7 @@
 .auth-container {
   min-height: calc(100vh - 4.5rem);
 
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-
   background-color: aliceblue;
+
+  display: flex;
 }

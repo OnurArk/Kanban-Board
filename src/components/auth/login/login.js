@@ -1,5 +1,5 @@
 import React from 'react';
-import { useNavigation, useSearchParams, Link } from 'react-router-dom';
+import { useNavigation, useActionData, Link, Form } from 'react-router-dom';
 
 import Input from '../../ui/input/input';
 import Button from '../../ui/button/button';
@@ -7,18 +7,21 @@ import Button from '../../ui/button/button';
 import styles from './login.module.css';
 
 const Login = () => {
+  const actionData = useActionData();
+
   const navigation = useNavigation();
   const isSubmitting = navigation.state === 'submittin';
 
-  // const [searchParams] = useSearchParams();
-  // const isSignup = searchParams.get('mode') === 'signup';
-
   return (
-    <div className={styles['login-container']}>
+    <Form method='post' className={styles['login-container']}>
       <h1>Log In</h1>
-      <h4 className={styles.sideTitle}>Hello There!</h4>
-      <Input type='email'>Email</Input>
-      <Input type='password'>Password</Input>
+      <h4>Hello There!</h4>
+      <Input type='email' name='email' err={actionData?.errType}>
+        Email
+      </Input>
+      <Input type='password' name='password' err={actionData?.errType}>
+        Password
+      </Input>
       <Link to={'?mode=signup'} className={styles.link}>
         +Sign Up
       </Link>
@@ -27,7 +30,7 @@ const Login = () => {
           {isSubmitting ? 'Submitting...' : 'Login'}
         </Button>
       </div>
-    </div>
+    </Form>
   );
 };
 

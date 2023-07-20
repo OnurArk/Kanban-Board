@@ -9,7 +9,6 @@ const svgFooter =
 const Footer = () => {
   const locationData = useLocation();
   const isInAuth = locationData.pathname === '/authentication';
-  console.log(locationData.search);
 
   const searchParams = new URLSearchParams(locationData.search);
 
