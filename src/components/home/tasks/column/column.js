@@ -36,8 +36,8 @@ const Column = (props) => {
                           status={props.status}
                           index={index}
                           innerRef={provided.innerRef}
-                          draggableProps={provided.draggableProps}
-                          dragHandleProps={provided.dragHandleProps}
+                          draggableProps={provided?.draggableProps}
+                          dragHandleProps={provided?.dragHandleProps}
                         />
                       );
                     }}

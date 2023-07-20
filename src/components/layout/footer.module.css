@@ -1,0 +1,69 @@
+.footer-container {
+  height: 4.5rem;
+
+  background-color: rgb(0, 0, 0);
+
+  color: rgb(230, 230, 230);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1000;
+}
+
+.footerText {
+  text-shadow: -10px 0 10px rgb(255, 247, 186);
+}
+
+.moon {
+  height: 3.5rem;
+  aspect-ratio: 1/1;
+
+  position: absolute;
+
+  right: 5%;
+  z-index: -1;
+
+  filter: drop-shadow(0 0 20px rgb(255, 247, 204))
+    drop-shadow(0 0 3px rgb(255, 255, 255))
+    drop-shadow(0 0 40px rgb(116, 190, 255));
+
+  animation: moonMovement 5s ease-out;
+}
+
+@keyframes moonMovement {
+  0% {
+    right: 110%;
+    transform: rotate(0);
+  }
+  92% {
+    right: 1%;
+    transform: rotate(390deg);
+  }
+  100% {
+    right: 5%;
+    transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 1024px) {
+  .footer-container {
+    font-size: 0.9rem;
+  }
+  .moon {
+    height: 3rem;
+  }
+}
+@media (max-width: 550px) {
+  .footer-container {
+    font-size: 0.8rem;
+  }
+  .moon {
+    height: 2.5rem;
+  }
+}

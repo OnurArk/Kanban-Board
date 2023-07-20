@@ -1,0 +1,42 @@
+.login-container {
+  padding: 1.5rem 3rem;
+
+  border-radius: 10px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+
+  background: linear-gradient(to bottom, black, #051cb192 30%, aliceblue);
+  color: rgb(255, 255, 255);
+  transition: all 0.4s ease;
+}
+
+.helloText {
+}
+
+.link {
+  font-weight: 500;
+  color: #051cb1fd;
+}
+
+.link:active {
+  color: rgb(0, 0, 0);
+}
+
+.btn {
+  --clr-neon: #051cb1b1;
+  --clr-bg: rgba(108, 106, 149, 0.485);
+  color: rgb(255, 255, 255);
+}
+
+.btn:hover {
+  --clr-neon: #0c2cffb1;
+}
+
+@media (min-width: 30rem) {
+  .login-container {
+    padding: 1.5rem 5rem;
+  }
+}

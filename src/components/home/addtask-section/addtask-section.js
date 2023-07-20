@@ -1,12 +1,12 @@
 import React, { useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
-import api from '../ui/http/api';
-import { tasksAction } from '../../store/task-slice';
+import api from '../../ui/http/api';
+import { tasksAction } from '../../../store/task-slice';
 import { v4 as uuidv4 } from 'uuid';
 
-import Input from '../ui/input/input';
-import Button from '../ui/button/button';
+import Input from '../../ui/input/input';
+import Button from '../../ui/button/button';
 
 import styles from './addtask-section.module.css';
 import { HiOutlineChevronDoubleDown } from 'react-icons/hi';
@@ -15,7 +15,7 @@ function generateRandomId() {
   return uuidv4();
 }
 
-const InputsSection = () => {
+const AddTaskSection = () => {
   const [err, setErr] = useState(null);
 
   const titleRef = useRef(null);
@@ -140,4 +140,4 @@ const InputsSection = () => {
   );
 };
 
-export default InputsSection;
+export default AddTaskSection;

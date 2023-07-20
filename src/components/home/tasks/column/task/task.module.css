@@ -96,8 +96,8 @@
   gap: 1rem;
 }
 
-.updateBtn:active {
-  --clr-neon: rgb(54, 239, 37);
+.cancelBtn:active {
+  --clr-neon: red;
 }
 
 .textarea {

@@ -9,13 +9,13 @@ const Input = forwardRef((props, ref) => {
         {props.children}
       </label>
       <input
-        type='text'
+        type={props?.type ? props.type : 'text'}
         ref={ref}
         placeholder={props.placeholder}
-        className={`${styles.input} ${
-          props.err && props.err.includes(props.name) ? styles.invalid : ''
+        className={`${props.className} ${styles.input} ${
+          props?.err && props.err.includes(props.name) ? styles.invalid : ''
         }`}
-        name={props.name}
+        name={props?.name}
       />
       {props?.err && props?.err.includes(props?.name) ? (
         <p className={styles.err}>You should fill the {props.name}</p>

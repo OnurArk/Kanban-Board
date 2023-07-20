@@ -1,7 +1,7 @@
 import React from 'react';
 
-const clock = () => {
+const Signup = () => {
   return <div></div>;
 };
 
-export default clock;
+export default Signup;

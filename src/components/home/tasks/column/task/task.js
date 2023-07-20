@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 
 import { useDispatch } from 'react-redux';
 
-import { tasksAction } from '../../../../store/task-slice';
-import taskFetcher from '../../../../store/task-action';
+import { tasksAction } from '../../../../../store/task-slice';
+import taskFetcher from '../../../../../store/task-action';
 
-import Button from '../../../ui/button/button';
+import Button from '../../../../ui/button/button';
 
 import styles from './task.module.css';
 import { RiDeleteBin2Fill, RiEdit2Fill } from 'react-icons/ri';
@@ -50,8 +50,11 @@ const Task = (props) => {
 
   const toggleEdit = (e) => {
     setIsEditable((pre) => !pre);
+    const scrollHeight =
+      e.target.scrollHeight > 54 ? e.target.scrollHeight : 54;
+
     setUpdatedTaskText(task.description);
-    setTextAreaHeight(e.target.scrollHeight);
+    setTextAreaHeight(scrollHeight);
   };
 
   const handleTaskTextOnChange = (e) => {
@@ -90,17 +93,19 @@ const Task = (props) => {
               onChange={handleTaskTextOnChange}
               className={styles.textarea}
               style={{ cursor: 'auto', height: `${textAreaHeight}px` }}
+              autoFocus
             >
               {task.description}
             </textarea>
             <div className={styles.btns}>
-              <Button type='button' onClick={toggleEdit}>
+              <Button
+                type='button'
+                onClick={toggleEdit}
+                className={styles.cancelBtn}
+              >
                 Cancel
               </Button>
-              <Button
-                onClick={() => editTaskTextHandler(task.id)}
-                className={styles.updateBtn}
-              >
+              <Button onClick={() => editTaskTextHandler(task.id)}>
                 Update
               </Button>
             </div>
