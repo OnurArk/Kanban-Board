@@ -16,10 +16,20 @@ const Login = () => {
     <Form method='post' className={styles['login-container']}>
       <h1>Log In</h1>
       <h4>Hello There!</h4>
-      <Input type='email' name='email' err={actionData?.errType}>
+      <Input
+        type='email'
+        name='email'
+        err={actionData?.errType}
+        errMsg={actionData?.errMessage}
+      >
         Email
       </Input>
-      <Input type='password' name='password' err={actionData?.errType}>
+      <Input
+        type='password'
+        name='password'
+        err={actionData?.errType}
+        errMsg={actionData?.errMessage}
+      >
         Password
       </Input>
       <Link to={'?mode=signup'} className={styles.link}>

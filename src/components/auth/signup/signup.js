@@ -1,5 +1,5 @@
 import React from 'react';
-import { useNavigation, Link, useActionData } from 'react-router-dom';
+import { useNavigation, Link, useActionData, Form } from 'react-router-dom';
 
 import Button from '../../ui/button/button';
 import Input from '../../ui/input/input';
@@ -13,7 +13,7 @@ const Signup = () => {
   const isSubmitting = navigation.state === 'submittin';
 
   return (
-    <div className={styles['signup-container']}>
+    <Form method='post' className={styles['signup-container']} noValidate>
       <h1>Sign Up</h1>
       <h4>Join the Dark Side!</h4>
       <Input
@@ -21,15 +21,47 @@ const Signup = () => {
         type='email'
         placeholder='Example: mail@mail'
         err={actionData?.errType}
-        autoComplete='email'
+        errMsg={actionData?.errMessage}
+        autoFocus
       >
-        New Email
+        Email
+      </Input>
+      <Input
+        name='firstName'
+        type='text'
+        placeholder='First Name'
+        err={actionData?.errType}
+        errMsg={actionData?.errMessage}
+        autoComplete='given-name'
+      >
+        First Name
+      </Input>
+      <Input
+        name='lastName'
+        type='text'
+        placeholder='Last Name'
+        err={actionData?.errType}
+        errMsg={actionData?.errMessage}
+        autoComplete='family-name'
+      >
+        Last Name
+      </Input>
+      <Input
+        name='username'
+        type='text'
+        placeholder='User Name'
+        err={actionData?.errType}
+        errMsg={actionData?.errMessage}
+        autoComplete='username'
+      >
+        User Name
       </Input>
       <Input
         name='password'
         type='password'
         placeholder='At least 6 characters'
         err={actionData?.errType}
+        errMsg={actionData?.errMessage}
         autoComplete='new-password'
       >
         New Password
@@ -39,6 +71,7 @@ const Signup = () => {
         type='password'
         placeholder='Confirm New Password'
         err={actionData?.errType}
+        errMsg={actionData?.errMessage}
         autoComplete='new-password'
       >
         Confirm Password
@@ -51,7 +84,7 @@ const Signup = () => {
           {isSubmitting ? 'Submitting...' : 'Signup'}
         </Button>
       </div>
-    </div>
+    </Form>
   );
 };
 

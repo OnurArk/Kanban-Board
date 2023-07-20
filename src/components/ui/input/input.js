@@ -18,7 +18,9 @@ const Input = forwardRef((props, ref) => {
         name={props?.name}
       />
       {props?.err && props?.err.includes(props?.name) ? (
-        <p className={styles.err}>You should fill the {props.name}</p>
+        <p className={styles.err}>
+          {props?.errMsg ? props?.errMsg : `You should fill the ${props.name}`}
+        </p>
       ) : null}
     </div>
   );

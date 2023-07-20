@@ -1,6 +1,8 @@
 import React from 'react';
 import { redirect, useSearchParams } from 'react-router-dom';
 
+import api from '../components/ui/http/api';
+
 import SideImage from '../components/auth/sideImage/sideImage';
 import Login from '../components/auth/login/login';
 import Signup from '../components/auth/signup/signup';
@@ -34,8 +36,17 @@ export async function action({ request }) {
   const data = await request.formData();
 
   const email = data.get('email');
+  const firstName = data.get('firstName');
+  const lastName = data.get('lastName');
+  const username = data.get('username');
   const password = data.get('password');
   const confirmPassword = data.get('confirm-password');
+  console.log(email);
+  console.log(firstName);
+  console.log(lastName);
+  console.log(username);
+  console.log(password);
+  console.log(confirmPassword);
 
   // Validation
 
@@ -80,9 +91,24 @@ export async function action({ request }) {
 
   // Sending request
 
+  const { requestFetch } = api();
+
   if (mode === 'signup') {
     try {
-      // signup api
+      requestFetch(
+        {
+          method: 'POST',
+          body: {
+            email: email,
+            username: username,
+            password: password,
+            first_name: firstName,
+            last_name: lastName,
+          },
+        },
+        'user/create'
+      );
+
       toActionData.isSucceed = true;
       return redirect('/');
     } catch (err) {
@@ -98,7 +124,7 @@ export async function action({ request }) {
       return redirect('/');
     } catch (err) {
       if (err.message.trim() === 'Error.') {
-        toActionData.errMessage = 'Check your Email and Password';
+        toActionData.errMessage = 'Check your username and Password';
       } else {
         toActionData.errMessage = err.message;
       }
@@ -107,6 +133,6 @@ export async function action({ request }) {
     }
   }
 
-  // default behavier
-  return redirect('/authentication');
+  // // default behavier
+  // return redirect('/authentication');
 }
