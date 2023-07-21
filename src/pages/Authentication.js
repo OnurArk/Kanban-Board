@@ -31,6 +31,7 @@ export async function action({ request }) {
   // finding where this form sen from login or signup
   const searchParams = new URL(request.url).searchParams;
   const mode = searchParams.get('mode') || 'login';
+  console.log(mode);
 
   // getting input values by input names
   const data = await request.formData();
@@ -50,18 +51,18 @@ export async function action({ request }) {
 
   // Validation
 
-  if (
-    typeof email !== 'string' ||
-    !email.includes('@') ||
-    !email.includes('.com')
-  ) {
-    toActionData.errMessage = 'Email address must contain @ and .com';
-    toActionData.errType
-      ? toActionData.errType.push('email')
-      : (toActionData.errType = ['email']);
-  }
-
   if (mode === 'signup') {
+    if (
+      typeof email !== 'string' ||
+      !email.includes('@') ||
+      !email.includes('.com')
+    ) {
+      toActionData.errMessage = 'Email address must contain @ and .com';
+      toActionData.errType
+        ? toActionData.errType.push('email')
+        : (toActionData.errType = ['email']);
+    }
+
     if (!confirmPassword || !password) {
       toActionData.errMessage = 'You need to type!';
       toActionData.errType
@@ -95,7 +96,7 @@ export async function action({ request }) {
 
   if (mode === 'signup') {
     try {
-      requestFetch(
+      const data = await requestFetch(
         {
           method: 'POST',
           body: {
@@ -106,11 +107,16 @@ export async function action({ request }) {
             last_name: lastName,
           },
         },
-        'user/create'
+        'user/create/'
       );
 
+      if (data?.errMsg) {
+        toActionData.errMessage = data?.errMsg;
+        return toActionData;
+      }
+
       toActionData.isSucceed = true;
-      return redirect('/');
+      return redirect('/authentication');
     } catch (err) {
       toActionData.errMessage = err.message;
 
@@ -120,7 +126,36 @@ export async function action({ request }) {
 
   if (mode === 'login') {
     try {
-      // login method
+      const data = await requestFetch(
+        {
+          method: 'POST',
+          body: {
+            username: username,
+            password: password,
+          },
+        },
+        'auth/token/get/'
+      );
+      console.log(data);
+
+      if (data?.errMsg) {
+        toActionData.errMessage = data?.errMsg;
+        return toActionData;
+      }
+
+      localStorage.setItem('accessToken', JSON.stringify(data.access));
+      localStorage.setItem('refreshToken', JSON.stringify(data.refresh));
+
+      //  get all user list
+      requestFetch(
+        {
+          headers: {
+            Authorization: 'Bearer' + data.access,
+          },
+        },
+        'user/list/'
+      );
+
       return redirect('/');
     } catch (err) {
       if (err.message.trim() === 'Error.') {

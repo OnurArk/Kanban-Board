@@ -8,6 +8,7 @@ import styles from './login.module.css';
 
 const Login = () => {
   const actionData = useActionData();
+  console.log(actionData);
 
   const navigation = useNavigation();
   const isSubmitting = navigation.state === 'submittin';
@@ -17,18 +18,22 @@ const Login = () => {
       <h1>Log In</h1>
       <h4>Hello There!</h4>
       <Input
-        type='email'
-        name='email'
+        name='username'
+        type='text'
+        placeholder='User Name'
         err={actionData?.errType}
         errMsg={actionData?.errMessage}
+        autoComplete='username'
       >
-        Email
+        User Name
       </Input>
       <Input
         type='password'
         name='password'
+        placeholder='At least 6 characters'
         err={actionData?.errType}
         errMsg={actionData?.errMessage}
+        autoComplete='current-password'
       >
         Password
       </Input>

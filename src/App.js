@@ -1,6 +1,3 @@
-import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-
 import {
   RouterProvider,
   Route,
@@ -8,8 +5,6 @@ import {
   createRoutesFromElements,
   Navigate,
 } from 'react-router-dom';
-
-import taskFetcher from './store/task-action';
 
 import RootLayout from './pages/RootLayout';
 import Home from './pages/Home';
@@ -31,13 +26,6 @@ const router = createBrowserRouter(
 );
 
 function App() {
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    // to get tasks data initally
-    dispatch(taskFetcher({}));
-  }, [dispatch]);
-
   return <RouterProvider router={router} />;
 }
 
