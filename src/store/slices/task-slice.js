@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-import api from '../components/ui/http/api';
+import api from '../../components/ui/http/api';
 
 // http request handler for redux
 const { requestFetch } = api();

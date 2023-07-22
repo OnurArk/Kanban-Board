@@ -2,7 +2,7 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { DragDropContext } from 'react-beautiful-dnd';
 
-import { tasksAction } from '../../../store/task-slice';
+import { tasksAction } from '../../../store/slices/task-slice';
 
 import Column from './column/column';
 

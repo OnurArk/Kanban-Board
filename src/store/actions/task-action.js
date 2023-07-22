@@ -1,4 +1,4 @@
-import { tasksAction } from './task-slice';
+import { tasksAction } from '../slices/task-slice';
 
 const taskFetcher = (requestConfig, endpoint) => {
   return async (dispatch) => {

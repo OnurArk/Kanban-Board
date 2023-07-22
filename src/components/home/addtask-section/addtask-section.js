@@ -2,7 +2,7 @@ import React, { useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 import api from '../../ui/http/api';
-import { tasksAction } from '../../../store/task-slice';
+import { tasksAction } from '../../../store/slices/task-slice';
 import { v4 as uuidv4 } from 'uuid';
 
 import Input from '../../ui/input/input';

@@ -136,15 +136,15 @@ export async function action({ request }) {
         },
         'auth/token/get/'
       );
-      console.log(data);
 
       if (data?.errMsg) {
         toActionData.errMessage = data?.errMsg;
         return toActionData;
       }
 
-      localStorage.setItem('accessToken', JSON.stringify(data.access));
-      localStorage.setItem('refreshToken', JSON.stringify(data.refresh));
+      localStorage.setItem('username', username);
+      localStorage.setItem('accessToken', data.access);
+      localStorage.setItem('refreshToken', data.refresh);
 
       //  get all user list
       requestFetch(

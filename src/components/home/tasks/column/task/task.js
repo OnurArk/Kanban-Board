@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 
 import { useDispatch } from 'react-redux';
 
-import { tasksAction } from '../../../../../store/task-slice';
-import taskFetcher from '../../../../../store/task-action';
+import { tasksAction } from '../../../../../store/slices/task-slice';
+import taskFetcher from '../../../../../store/actions/task-action';
 
 import Button from '../../../../ui/button/button';
 
