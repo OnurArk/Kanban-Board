@@ -1,6 +1,6 @@
 .user-new-info-container {
   padding: 2rem;
-  width: 20rem;
+  width: clamp(19rem, 26vw, 25rem);
 
   border-radius: 10px;
 
