@@ -1,6 +1,6 @@
 import { userAction } from '../slices/user-slice';
 
-const reqUserList = () => {
+export const reqUserList = () => {
   return async (dispatch) => {
     try {
       const apiUrl = 'http://134.209.207.128/api';
@@ -28,5 +28,3 @@ const reqUserList = () => {
     }
   };
 };
-
-export default reqUserList;

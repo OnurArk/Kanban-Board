@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 
 import api from '../components/ui/http/api';
 import taskFetcher from '../store/actions/task-action';
-import reqUserList from '../store/actions/user-action';
+import { reqUserList } from '../store/actions/user-action';
 
 import AddTaskSection from '../components/home/addtask-section/addtask-section';
 import Clock from '../components/home/clock/clock';
