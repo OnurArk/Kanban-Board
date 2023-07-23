@@ -16,7 +16,6 @@ const KanbanSection = () => {
 
   const onDragEnd = (result) => {
     const { source, destination } = result;
-    console.log(destination);
 
     if (!destination) return;
 
@@ -33,7 +32,6 @@ const KanbanSection = () => {
   const columns = allStatus.map((status) => (
     <Column status={status.category_title} id={status.id} key={status.id} />
   ));
-  console.log(allStatus);
 
   return (
     <div className={styles['tasks-container']}>

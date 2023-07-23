@@ -23,6 +23,21 @@ const taskFetcher = (requestConfig, endpoint, sliceMethod) => {
 
       if (sliceMethod && sliceMethod === 'getStatus') {
         dispatch(tasksAction.getStatus(data.categories));
+        dispatch(
+          taskFetcher(
+            {
+              headers: {
+                Authorization: 'Bearer ' + localStorage.getItem('accessToken'),
+              },
+            },
+            'item/list/',
+            'getTasks'
+          )
+        );
+      }
+
+      if (sliceMethod && sliceMethod === 'getTasks') {
+        dispatch(tasksAction.getTasks(data.items));
       }
     } catch (err) {
       console.log(err.message || 'Something went wrong!');

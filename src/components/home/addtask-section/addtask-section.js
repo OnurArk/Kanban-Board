@@ -73,6 +73,7 @@ const AddTaskSection = () => {
       item_description: description,
       category_id: statusId,
     };
+    console.log(statusId);
 
     dispatch(
       taskFetcher(
@@ -89,8 +90,8 @@ const AddTaskSection = () => {
     );
 
     // Reset the form fields
-    // titleRef.current.value = '';
-    // descriptionRef.current.value = '';
+    titleRef.current.value = '';
+    descriptionRef.current.value = '';
 
     setErr(null);
   };

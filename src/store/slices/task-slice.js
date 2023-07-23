@@ -1,14 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-import api from '../../components/ui/http/api';
-
-// http request handler for redux
-const { requestFetch } = api();
-
 const tasksSlice = createSlice({
   name: 'tasks',
   initialState: {
-    alltasks: { todo: [], progress: [], done: [] },
+    alltasks: [],
     allStatus: [],
   },
   reducers: {
@@ -16,10 +11,13 @@ const tasksSlice = createSlice({
       const allStatus = action.payload;
 
       state.allStatus = Object.values(allStatus);
-
-      console.log(state.allStatus);
     },
-    addNewTask(state, action) {},
+    getTasks(state, action) {
+      const tasks = action.payload;
+      console.log(tasks);
+
+      state.alltasks = Object.values(tasks);
+    },
   },
 });
 
