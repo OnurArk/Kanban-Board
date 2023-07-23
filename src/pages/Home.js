@@ -1,6 +1,6 @@
 import { useCallback, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { useNavigate, Outlet } from 'react-router-dom';
+import { useNavigate, Outlet, redirect } from 'react-router-dom';
 
 import api from '../components/ui/http/api';
 import taskFetcher from '../store/actions/task-action';
@@ -43,7 +43,17 @@ const Home = () => {
       if (response && response.access) {
         localStorage.setItem('accessToken', response.access);
         localStorage.setItem('refreshToken', response.refresh);
-        dispatch(taskFetcher({}));
+        dispatch(
+          taskFetcher(
+            {
+              headers: {
+                Authorization: 'Bearer ' + localStorage.getItem('accessToken'),
+              },
+            },
+            'category/list/',
+            'getStatus'
+          )
+        );
         dispatch(reqUserList());
       } else {
         console.log('Error refreshing token or user unauthorized');
@@ -68,7 +78,17 @@ const Home = () => {
         handleTokenRefresh();
       } else {
         dispatch(reqUserList());
-        dispatch(taskFetcher({}));
+        dispatch(
+          taskFetcher(
+            {
+              headers: {
+                Authorization: 'Bearer ' + localStorage.getItem('accessToken'),
+              },
+            },
+            'category/list/',
+            'getStatus'
+          )
+        );
       }
     }
   }, [dispatch, isTokenExpired, handleTokenRefresh, navigate]);
@@ -86,3 +106,64 @@ const Home = () => {
 };
 
 export default Home;
+
+export async function action({ request }) {
+  const { requestFetch } = api();
+
+  const toActionData = {};
+
+  // finding where this form sen from login or signup
+  const searchParams = new URL(request.url).searchParams;
+  const mode = searchParams.get('mode');
+
+  // getting input values by input names
+  const data = await request.formData();
+
+  const status = data.get('status');
+  console.log(status);
+
+  if (!mode) {
+    return redirect('/');
+  }
+
+  if (mode === 'adding-status') {
+    if (!status) {
+      toActionData.errMessage = 'You should fill status';
+      return toActionData;
+    }
+    if (status.length > 15) {
+      toActionData.errMessage = 'You can use at most 10 characters!';
+
+      return toActionData;
+    }
+
+    try {
+      const response = await requestFetch(
+        {
+          method: 'POST',
+          body: {
+            category_title: status,
+          },
+          headers: {
+            Authorization: 'Bearer ' + localStorage.getItem('accessToken'),
+          },
+        },
+        'category/create/'
+      );
+
+      if (response.errMsg) {
+        toActionData.errMessage = response.errMsg;
+        return toActionData;
+      }
+
+      toActionData.isSucceed = true;
+      return redirect('/');
+    } catch (err) {
+      toActionData.errMessage = err.message;
+
+      return toActionData;
+    }
+  }
+
+  return redirect('/');
+}

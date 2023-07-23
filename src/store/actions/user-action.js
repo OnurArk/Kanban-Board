@@ -20,7 +20,6 @@ export const reqUserList = () => {
       }
 
       const data = await response.json();
-      console.log(data);
 
       dispatch(userAction.findUI(data));
     } catch (err) {

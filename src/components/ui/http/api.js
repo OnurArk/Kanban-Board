@@ -3,10 +3,6 @@ const api = () => {
     try {
       const apiUrl = 'http://134.209.207.128/api';
       const url = `${apiUrl}${endpoint ? `/${endpoint}` : '/'}`;
-      console.log(url);
-      console.log(requestConfig.method);
-      console.log(requestConfig.body);
-      console.log(requestConfig.header);
 
       const response = await fetch(url, {
         method: requestConfig.method ? requestConfig.method : 'GET',
@@ -17,6 +13,7 @@ const api = () => {
       });
 
       const data = await response.json();
+      console.log(data);
 
       if (response.status === 401) {
         throw new Error('No active account found with the given credentials');

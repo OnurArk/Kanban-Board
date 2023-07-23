@@ -1,11 +1,10 @@
 import { tasksAction } from '../slices/task-slice';
 
-const taskFetcher = (requestConfig, endpoint) => {
+const taskFetcher = (requestConfig, endpoint, sliceMethod) => {
   return async (dispatch) => {
     try {
-      const apiUrl =
-        'https://deneme-5775b-default-rtdb.firebaseio.com/allTasks';
-      const url = `${apiUrl}${endpoint ? `/${endpoint}` : ''}.json`;
+      const apiUrl = 'http://134.209.207.128/api/';
+      const url = `${apiUrl}${endpoint ? `${endpoint}` : ''}`;
 
       const response = await fetch(url, {
         method: requestConfig.method ? requestConfig.method : 'GET',
@@ -15,14 +14,15 @@ const taskFetcher = (requestConfig, endpoint) => {
           : { 'Content-Type': 'application/json' },
       });
 
+      const data = await response.json();
+      console.log(data);
+
       if (!response.ok) {
         throw new Error(response.statusMessage);
       }
 
-      const data = await response.json();
-
-      if (!requestConfig.method) {
-        dispatch(tasksAction.getAllTasks(data));
+      if (sliceMethod && sliceMethod === 'getStatus') {
+        dispatch(tasksAction.getStatus(data.categories));
       }
     } catch (err) {
       console.log(err.message || 'Something went wrong!');

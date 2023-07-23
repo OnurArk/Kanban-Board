@@ -1,9 +1,8 @@
 import React, { useRef, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
-import api from '../../ui/http/api';
-import { tasksAction } from '../../../store/slices/task-slice';
-import { v4 as uuidv4 } from 'uuid';
+import taskFetcher from '../../../store/actions/task-action';
+// import { v4 as uuidv4 } from 'uuid';
 
 import Input from '../../ui/input/input';
 import Button from '../../ui/button/button';
@@ -11,25 +10,27 @@ import Button from '../../ui/button/button';
 import styles from './addtask-section.module.css';
 import { HiOutlineChevronDoubleDown } from 'react-icons/hi';
 
-function generateRandomId() {
-  return uuidv4();
-}
+// function generateRandomId() {
+//   return uuidv4();
+// }
 
 const AddTaskSection = () => {
   const [err, setErr] = useState(null);
 
   const titleRef = useRef(null);
   const descriptionRef = useRef(null);
-  const statusRef = useRef('todo');
+  const statusRef = useRef(null);
 
   const dispatch = useDispatch();
+  const { allStatus } = useSelector((state) => state.tasks);
+  console.log(allStatus);
 
   const submitHandler = async (event) => {
     event.preventDefault();
 
     const title = titleRef.current.value;
     const description = descriptionRef.current.value;
-    const status = statusRef.current.value;
+    const statusId = statusRef.current.value;
 
     const errorsContain = [];
 
@@ -39,7 +40,7 @@ const AddTaskSection = () => {
     if (!description) {
       errorsContain.push('description');
     }
-    if (!status) {
+    if (!statusId) {
       errorsContain.push('status');
     }
 
@@ -48,63 +49,59 @@ const AddTaskSection = () => {
       return;
     }
 
-    // produce id for each task
-    const randomId = generateRandomId();
+    // // produce id for each task
+    // const randomId = generateRandomId();
 
-    // produce random task background
-    const letters = '0123456789ABCDEF';
-    let color = '#';
-    for (let i = 0; i < 6; i++) {
-      color += letters[Math.floor(Math.random() * 16)];
-    }
+    // // produce random task background
+    // const letters = '0123456789ABCDEF';
+    // let color = '#';
+    // for (let i = 0; i < 6; i++) {
+    //   color += letters[Math.floor(Math.random() * 16)];
+    // }
 
-    // determine text color and title color based on background color brightness
-    const brightnessThreshold = 128;
-    const r = parseInt(color.substring(1, 3), 16);
-    const g = parseInt(color.substring(3, 5), 16);
-    const b = parseInt(color.substring(5, 7), 16);
-    const brightness = (r * 299 + g * 587 + b * 114) / 1000;
+    // // determine text color and title color based on background color brightness
+    // const brightnessThreshold = 128;
+    // const r = parseInt(color.substring(1, 3), 16);
+    // const g = parseInt(color.substring(3, 5), 16);
+    // const b = parseInt(color.substring(5, 7), 16);
+    // const brightness = (r * 299 + g * 587 + b * 114) / 1000;
 
-    const textColor = brightness > brightnessThreshold ? '#000000' : '#FFFFFF';
+    // const textColor = brightness > brightnessThreshold ? '#000000' : '#FFFFFF';
 
     const newTask = {
-      title,
-      description,
-      status,
-      backgroundColor: color,
-      id: randomId,
-      textColor,
+      item_title: title,
+      item_description: description,
+      category_id: statusId,
     };
 
-    const { requestFetch } = api();
-
-    const data = await requestFetch(
-      {
-        method: 'POST',
-        body: newTask,
-      },
-      newTask.status
-    );
-    console.log(data);
-
-    // sending to redux dor smoth transition
     dispatch(
-      tasksAction.addNewTask({
-        ...newTask,
-        positionId: data.name ? data.name : null,
-      })
+      taskFetcher(
+        {
+          method: 'POST',
+          body: newTask,
+          headers: {
+            Authorization: 'Bearer ' + localStorage.getItem('accessToken'),
+          },
+        },
+        'item/create/',
+        'getTasks'
+      )
     );
 
     // Reset the form fields
-    titleRef.current.value = '';
-    descriptionRef.current.value = '';
+    // titleRef.current.value = '';
+    // descriptionRef.current.value = '';
 
     setErr(null);
   };
 
-  const options = ['todo', 'progress', 'done'].map((type) => (
-    <option value={`${type}`} key={type} className={styles.optns}>
-      {type}
+  const options = allStatus.map((status) => (
+    <option
+      value={`${status.category_id}`}
+      key={status.id}
+      className={styles.optns}
+    >
+      {status.category_title}
     </option>
   ));
 
@@ -127,7 +124,13 @@ const AddTaskSection = () => {
         </label>
         <div className={styles.selectLayout}>
           <select className={styles.typeSelect} ref={statusRef} name='status'>
-            {options}
+            {allStatus.length > 0 ? (
+              options
+            ) : (
+              <option value={'none'} className={styles.optns}>
+                Add Status First!
+              </option>
+            )}
           </select>
           <span className={styles['custom-arrow']}>
             <HiOutlineChevronDoubleDown className={styles.icon} />

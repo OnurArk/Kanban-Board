@@ -7,8 +7,10 @@ import Task from './task/task';
 import styles from './column.module.css';
 
 const Column = (props) => {
+  console.log(props);
+
   return (
-    <Droppable droppableId={props.status}>
+    <Droppable droppableId={`${props.id}`}>
       {(provided, snapshot) => {
         return (
           <div className={styles['tasks-container']}>

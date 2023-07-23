@@ -24,7 +24,7 @@
 }
 
 .showProfile {
-  width: 9rem;
+  width: 11rem;
 }
 
 .toggle {
@@ -64,7 +64,7 @@
   position: fixed;
   background-color: rgba(0, 0, 0, 0.537);
   inset: 0;
-  left: 9rem;
+  left: 11rem;
 
   z-index: -50;
 }
@@ -89,12 +89,44 @@
   text-shadow: 0 0 5px white, 1px 0 5px white, 0 1px 5px white;
 }
 
+.changePassword {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  gap: 0.2rem;
+
+  font-weight: 700;
+  color: rgb(50, 75, 185);
+  text-shadow: 0 0 5px white, 1px 0 5px white, 0 1px 5px white;
+  cursor: pointer;
+  user-select: none;
+}
+
+.changePassword:active {
+  color: rgba(167, 0, 0, 0.623);
+}
+
+.changePassword .icon {
+  color: rgb(247, 247, 247);
+}
+
 .btn {
   --clr-neon: #969de8;
   --clr-bg: #000000e4;
 }
 
 .btn:active {
+  --clr-neon: #e3e4f0;
+  --clr-bg: #181e2de4;
+}
+
+.btnDelete {
+  --clr-neon: #ee4a4a;
+  --clr-bg: #000000e4;
+}
+
+.btnDelete:active {
   --clr-neon: #e3e4f0;
   --clr-bg: #181e2de4;
 }

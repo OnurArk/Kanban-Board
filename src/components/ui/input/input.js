@@ -11,6 +11,7 @@ const Input = forwardRef((props, ref) => {
       <input
         type={props?.type ? props.type : 'text'}
         ref={ref}
+        value={props?.value}
         placeholder={props.placeholder}
         className={`${props.className} ${styles.input} ${
           props?.err && props.err.includes(props.name) ? styles.invalid : ''
