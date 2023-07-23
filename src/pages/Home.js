@@ -1,6 +1,6 @@
 import { useCallback, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Outlet } from 'react-router-dom';
 
 import api from '../components/ui/http/api';
 import taskFetcher from '../store/actions/task-action';
@@ -9,7 +9,6 @@ import { reqUserList } from '../store/actions/user-action';
 import AddTaskSection from '../components/home/addtask-section/addtask-section';
 import Clock from '../components/home/clock/clock';
 import KanbanSection from '../components/home/tasks/kanban-section';
-import Profile from '../components/home/profile/profile';
 
 import styles from '../styles/Home.module.css';
 
@@ -80,7 +79,7 @@ const Home = () => {
         <AddTaskSection />
         <Clock />
         <KanbanSection />
-        <Profile />
+        <Outlet />
       </div>
     </div>
   );

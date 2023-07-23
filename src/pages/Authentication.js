@@ -31,7 +31,6 @@ export async function action({ request }) {
   // finding where this form sen from login or signup
   const searchParams = new URL(request.url).searchParams;
   const mode = searchParams.get('mode') || 'login';
-  console.log(mode);
 
   // getting input values by input names
   const data = await request.formData();
@@ -42,12 +41,6 @@ export async function action({ request }) {
   const username = data.get('username');
   const password = data.get('password');
   const confirmPassword = data.get('confirm-password');
-  console.log(email);
-  console.log(firstName);
-  console.log(lastName);
-  console.log(username);
-  console.log(password);
-  console.log(confirmPassword);
 
   // Validation
 

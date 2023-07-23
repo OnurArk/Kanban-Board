@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { redirect } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 import api from '../../ui/http/api';
@@ -107,3 +108,55 @@ const Profile = () => {
 };
 
 export default Profile;
+
+export async function action({ request }) {
+  const toActionData = {};
+
+  const data = await request.formData();
+
+  const username = data.get('user-name');
+  const email = data.get('email');
+  const firstName = data.get('first-name');
+  const lastName = data.get('last-name');
+
+  console.log(username);
+  console.log(email);
+  console.log(firstName);
+  console.log(lastName);
+
+  if (
+    typeof email !== 'string' ||
+    !email.includes('@') ||
+    !email.includes('.com')
+  ) {
+    toActionData.errMessage = 'Email address must contain @ and .com';
+    toActionData.errType
+      ? toActionData.errType.push('email')
+      : (toActionData.errType = ['email']);
+  }
+
+  if (!username || !email || !firstName || !lastName) {
+    toActionData.errMessage = 'You should fill Inputs';
+  }
+
+  // sending errors and types back to handle with useActionData
+  if (Object.keys(toActionData).length) {
+    return toActionData;
+  }
+
+  const { requestFetch } = api();
+
+  // const response = await requestFetch(
+  //   {
+  //     method: 'GET',
+  //     headers: {
+  //       Authorization: 'Bearer ' + localStorage.getItem('accessToken'),
+  //     },
+  //   },
+
+  // );
+
+  localStorage.setItem('username', username);
+
+  return redirect('/');
+}

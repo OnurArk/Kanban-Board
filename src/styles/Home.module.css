@@ -15,4 +15,5 @@
   min-height: calc(100vh - 4.5rem);
 
   backdrop-filter: contrast(160%);
+  -webkit-backdrop-filter: contrast(160%);
 }
