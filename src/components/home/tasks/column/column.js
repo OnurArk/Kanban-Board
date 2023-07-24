@@ -7,8 +7,6 @@ import Task from './task/task';
 import styles from './column.module.css';
 
 const Column = (props) => {
-  console.log(props?.tasks);
-
   return (
     <Droppable droppableId={`${props.id}`}>
       {(provided, snapshot) => {
@@ -35,7 +33,6 @@ const Column = (props) => {
                       return (
                         <Task
                           task={task}
-                          status={props.status}
                           index={index}
                           innerRef={provided.innerRef}
                           draggableProps={provided?.draggableProps}

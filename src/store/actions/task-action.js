@@ -23,6 +23,9 @@ const taskFetcher = (requestConfig, endpoint, sliceMethod) => {
 
       if (sliceMethod && sliceMethod === 'getStatus') {
         dispatch(tasksAction.getStatus(data.categories));
+      }
+
+      if (!sliceMethod || sliceMethod !== 'getTasks') {
         dispatch(
           taskFetcher(
             {

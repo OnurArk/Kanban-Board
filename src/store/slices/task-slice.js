@@ -15,6 +15,7 @@ const tasksSlice = createSlice({
     },
     getTasks(state, action) {
       const tasks = action.payload;
+      console.log(tasks);
 
       state.alltasks = Object.values(tasks);
 

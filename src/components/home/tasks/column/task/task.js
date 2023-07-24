@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 
 import { useDispatch } from 'react-redux';
 
-import { tasksAction } from '../../../../../store/slices/task-slice';
 import taskFetcher from '../../../../../store/actions/task-action';
 
 import Button from '../../../../ui/button/button';
@@ -11,41 +10,47 @@ import styles from './task.module.css';
 import { RiDeleteBin2Fill, RiEdit2Fill } from 'react-icons/ri';
 
 const Task = (props) => {
-  const { task, status } = props;
-  console.log(task);
+  const { task } = props;
 
   const [isEditable, setIsEditable] = useState(false);
   const [updatedTaskText, setUpdatedTaskText] = useState('');
   const [textAreaHeight, setTextAreaHeight] = useState('42');
 
   const dispatch = useDispatch();
+  console.log(updatedTaskText);
 
   const removeTaskHandler = (id) => {
-    dispatch(taskFetcher({ method: 'DELETE' }, `${status}/${task.positionId}`));
-
-    dispatch(tasksAction.removeTask({ id, status }));
+    dispatch(
+      taskFetcher(
+        {
+          method: 'DELETE',
+          headers: {
+            Authorization: 'Bearer ' + localStorage.getItem('accessToken'),
+          },
+        },
+        `item/delete/${id}/`
+      )
+    );
   };
 
-  const editTaskTextHandler = (id) => {
+  const editTaskTextHandler = () => {
+    // removing id and item_id
+    const { id, item_id, ...simpleTask } = task;
+
     dispatch(
       taskFetcher(
         {
           method: 'PATCH',
-          body: { ...task, description: updatedTaskText },
+          body: { ...simpleTask, item_description: updatedTaskText },
+          headers: {
+            Authorization: 'Bearer ' + localStorage.getItem('accessToken'),
+          },
         },
-        `${status}/${task.positionId}`
+        `item/update/${id}/`
       )
     );
-
-    // smoth transition
-    dispatch(
-      tasksAction.editTaskText({
-        id,
-        status,
-        updatedTask: updatedTaskText,
-      })
-    );
-
+    console.log('editTaskTextHandler');
+    setUpdatedTaskText(updatedTaskText);
     setIsEditable(false);
   };
 
@@ -54,11 +59,14 @@ const Task = (props) => {
     const scrollHeight =
       e.target.scrollHeight > 54 ? e.target.scrollHeight : 54;
 
+    console.log('toggleEdit');
+
     setUpdatedTaskText(task.item_description);
     setTextAreaHeight(scrollHeight);
   };
 
   const handleTaskTextOnChange = (e) => {
+    console.log('handleTaskTextOnChange');
     setUpdatedTaskText(e.target.value);
     setTextAreaHeight(e.target.scrollHeight);
   };
@@ -82,7 +90,7 @@ const Task = (props) => {
             className={styles.description}
             style={{ color: task.textColor }}
           >
-            {task?.item_description}
+            {updatedTaskText}
           </p>
         )}
         {isEditable && (
@@ -96,7 +104,7 @@ const Task = (props) => {
               style={{ cursor: 'auto', height: `${textAreaHeight}px` }}
               autoFocus
             >
-              {task.description}
+              {updatedTaskText}
             </textarea>
             <div className={styles.btns}>
               <Button
@@ -106,9 +114,7 @@ const Task = (props) => {
               >
                 Cancel
               </Button>
-              <Button onClick={() => editTaskTextHandler(task.id)}>
-                Update
-              </Button>
+              <Button onClick={() => editTaskTextHandler()}>Update</Button>
             </div>
           </div>
         )}
