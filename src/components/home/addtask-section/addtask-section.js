@@ -30,6 +30,7 @@ const AddTaskSection = () => {
     const title = titleRef.current.value;
     const description = descriptionRef.current.value;
     const statusId = statusRef.current.value;
+    console.log();
 
     const errorsContain = [];
 
@@ -76,11 +77,7 @@ const AddTaskSection = () => {
   };
 
   const options = allStatus.map((status) => (
-    <option
-      value={`${status.category_id}`}
-      key={status.id}
-      className={styles.optns}
-    >
+    <option value={`${status.id}`} key={status.id} className={styles.optns}>
       {status.category_title}
     </option>
   ));

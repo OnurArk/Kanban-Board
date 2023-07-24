@@ -13,11 +13,12 @@ const Task = (props) => {
   const { task } = props;
 
   const [isEditable, setIsEditable] = useState(false);
-  const [updatedTaskText, setUpdatedTaskText] = useState('');
+  const [updatedTaskText, setUpdatedTaskText] = useState(
+    task?.item_description
+  );
   const [textAreaHeight, setTextAreaHeight] = useState('42');
 
   const dispatch = useDispatch();
-  console.log(updatedTaskText);
 
   const removeTaskHandler = (id) => {
     dispatch(
@@ -49,7 +50,7 @@ const Task = (props) => {
         `item/update/${id}/`
       )
     );
-    console.log('editTaskTextHandler');
+
     setUpdatedTaskText(updatedTaskText);
     setIsEditable(false);
   };
@@ -59,14 +60,11 @@ const Task = (props) => {
     const scrollHeight =
       e.target.scrollHeight > 54 ? e.target.scrollHeight : 54;
 
-    console.log('toggleEdit');
-
     setUpdatedTaskText(task.item_description);
     setTextAreaHeight(scrollHeight);
   };
 
   const handleTaskTextOnChange = (e) => {
-    console.log('handleTaskTextOnChange');
     setUpdatedTaskText(e.target.value);
     setTextAreaHeight(e.target.scrollHeight);
   };
