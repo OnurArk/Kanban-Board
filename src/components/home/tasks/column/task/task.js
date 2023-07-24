@@ -12,6 +12,7 @@ import { RiDeleteBin2Fill, RiEdit2Fill } from 'react-icons/ri';
 
 const Task = (props) => {
   const { task, status } = props;
+  console.log(task);
 
   const [isEditable, setIsEditable] = useState(false);
   const [updatedTaskText, setUpdatedTaskText] = useState('');
@@ -53,7 +54,7 @@ const Task = (props) => {
     const scrollHeight =
       e.target.scrollHeight > 54 ? e.target.scrollHeight : 54;
 
-    setUpdatedTaskText(task.description);
+    setUpdatedTaskText(task.item_description);
     setTextAreaHeight(scrollHeight);
   };
 
@@ -73,7 +74,7 @@ const Task = (props) => {
         className={styles['task-container']}
       >
         <h3 className={styles.title} style={{ color: task.textColor }}>
-          {task.title}
+          {task?.item_title}
         </h3>
         {!isEditable && (
           <p
@@ -81,7 +82,7 @@ const Task = (props) => {
             className={styles.description}
             style={{ color: task.textColor }}
           >
-            {task.description}
+            {task?.item_description}
           </p>
         )}
         {isEditable && (

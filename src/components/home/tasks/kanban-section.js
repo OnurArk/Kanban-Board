@@ -10,7 +10,9 @@ import AddStatus from './add-status/add-status';
 import styles from './kanban-section.module.css';
 
 const KanbanSection = () => {
-  const { allStatus } = useSelector((state) => state.tasks);
+  const { alltasks, tasksByCategory, allStatus } = useSelector(
+    (state) => state.tasks
+  );
 
   const dispatch = useDispatch();
 
@@ -30,18 +32,18 @@ const KanbanSection = () => {
   };
 
   const columns = allStatus.map((status) => (
-    <Column status={status.category_title} id={status.id} key={status.id} />
+    <Column
+      status={status.category_title}
+      id={status.id}
+      key={status.id}
+      tasks={tasksByCategory[status.category_id] || []}
+    />
   ));
 
   return (
     <div className={styles['tasks-container']}>
       <AddStatus />
-      <DragDropContext onDragEnd={onDragEnd}>
-        {/* <Column status='todo' tasks={todo} />
-        <Column status='progress' tasks={progress} />
-        <Column status='done' tasks={done} /> */}
-        {columns}
-      </DragDropContext>
+      <DragDropContext onDragEnd={onDragEnd}>{columns}</DragDropContext>
     </div>
   );
 };

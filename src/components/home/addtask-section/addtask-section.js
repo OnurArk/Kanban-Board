@@ -23,7 +23,6 @@ const AddTaskSection = () => {
 
   const dispatch = useDispatch();
   const { allStatus } = useSelector((state) => state.tasks);
-  console.log(allStatus);
 
   const submitHandler = async (event) => {
     event.preventDefault();
