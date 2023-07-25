@@ -7,6 +7,7 @@ const { refreshToken } = api();
 
 const taskFetcher = (requestConfig, endpoint, sliceMethod) => {
   return async (dispatch) => {
+    console.log('b');
     try {
       const apiUrl = 'http://134.209.207.128/api/';
       const url = `${apiUrl}${endpoint ? `${endpoint}` : ''}`;
@@ -22,7 +23,7 @@ const taskFetcher = (requestConfig, endpoint, sliceMethod) => {
       const data = await response.json();
 
       if (response.status === 401) {
-        return await handleTokenRefreshAndRetry(
+        await handleTokenRefreshAndRetry(
           taskFetcher,
           requestConfig,
           endpoint,
@@ -82,11 +83,7 @@ const handleTokenRefreshAndRetry = async (
   dispatch,
   sliceMethod
 ) => {
-  console.log(retryFunction);
-  console.log(requestConfig);
-  console.log(endpoint);
-  console.log(sliceMethod);
-  console.log(await retryFunction(requestConfig, endpoint, sliceMethod));
+  console.log('a');
 
   try {
     const refreshedData = await refreshToken();
