@@ -152,9 +152,6 @@ export async function action({ request }) {
 
   const password = data.get('password');
 
-  console.log(nav);
-  console.log(username);
-
   if (!nav) {
     return redirect('/');
   }

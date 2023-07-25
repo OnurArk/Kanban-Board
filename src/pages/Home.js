@@ -32,7 +32,7 @@ const Home = () => {
     const { refreshToken } = api();
     try {
       const response = await refreshToken();
-      console.log(response);
+
       if (response && response?.redirect) {
         navigate('/authentication');
       }
@@ -125,11 +125,16 @@ export async function action({ request }) {
   if (mode === 'adding-status') {
     if (!status) {
       toActionData.errMessage = 'You should fill status';
+      toActionData.errType
+        ? toActionData.errType.push('status')
+        : (toActionData.errType = ['status']);
       return toActionData;
     }
     if (status.length > 15) {
-      toActionData.errMessage = 'You can use at most 10 characters!';
-
+      toActionData.errMessage = 'You can use at most 15 characters!';
+      toActionData.errType
+        ? toActionData.errType.push('status')
+        : (toActionData.errType = ['status']);
       return toActionData;
     }
 

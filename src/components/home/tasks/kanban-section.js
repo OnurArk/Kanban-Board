@@ -13,14 +13,13 @@ import styles from './kanban-section.module.css';
 
 const KanbanSection = () => {
   const { tasksByCategory, allStatus } = useSelector((state) => state.tasks);
-  console.log(tasksByCategory);
 
   const dispatch = useDispatch();
 
   const onDragEnd = (result) => {
     const { source, destination } = result;
-    // console.log(source); // {index: çıktığı index,droppableId: çıktığı statusId }
-    // console.log(destination); // {index: geldiği index,droppableId: geldiği statusId }
+    // console.log(source); // {index: taken from index,droppableId: taken from  statusId = category_id }
+    // console.log(destination); // {index: goal index,droppableId: goal statusId }
 
     if (!destination) return;
     //tasksByCategory use this to update and post again
@@ -41,7 +40,7 @@ const KanbanSection = () => {
           body: {
             ...simpleTask,
             order_id: destination.index + 1,
-            category_id: +destination.droppableId,
+            category_id: destination.droppableId,
           },
           headers: {
             Authorization: 'Bearer ' + localStorage.getItem('accessToken'),

@@ -1,13 +1,12 @@
 import { tasksAction } from '../slices/task-slice';
+import { redirect } from 'react-router-dom';
 
 import api from '../../components/ui/http/api';
 
-const { handleTokenRefreshAndRetry } = api();
+const { refreshToken } = api();
 
 const taskFetcher = (requestConfig, endpoint, sliceMethod) => {
   return async (dispatch) => {
-    console.log('a');
-
     try {
       const apiUrl = 'http://134.209.207.128/api/';
       const url = `${apiUrl}${endpoint ? `${endpoint}` : ''}`;
@@ -21,14 +20,13 @@ const taskFetcher = (requestConfig, endpoint, sliceMethod) => {
       });
 
       const data = await response.json();
-      console.log(data);
-      console.log(response);
 
       if (response.status === 401) {
         return await handleTokenRefreshAndRetry(
           taskFetcher,
           requestConfig,
           endpoint,
+          dispatch,
           sliceMethod
         );
       }
@@ -75,6 +73,34 @@ const taskFetcher = (requestConfig, endpoint, sliceMethod) => {
       console.log(err.message || 'Something went wrong!');
     }
   };
+};
+
+const handleTokenRefreshAndRetry = async (
+  retryFunction,
+  requestConfig,
+  endpoint,
+  dispatch,
+  sliceMethod
+) => {
+  console.log(retryFunction);
+  console.log(requestConfig);
+  console.log(endpoint);
+  console.log(sliceMethod);
+  console.log(await retryFunction(requestConfig, endpoint, sliceMethod));
+
+  try {
+    const refreshedData = await refreshToken();
+    if (refreshedData.redirect) {
+      redirect('/authentication');
+    }
+
+    // Retry the original request with the updated access token
+    return await dispatch(retryFunction(requestConfig, endpoint, sliceMethod));
+  } catch (err) {
+    console.log(err.message);
+    // Handle errors during token refresh or retry failure
+    return { errMsg: err.message };
+  }
 };
 
 export default taskFetcher;

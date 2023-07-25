@@ -26,7 +26,6 @@ const AddTaskSection = () => {
     const title = titleRef.current.value;
     const description = descriptionRef.current.value;
     const statusId = statusRef.current.value;
-    console.log();
 
     const errorsContain = [];
 
@@ -50,7 +49,6 @@ const AddTaskSection = () => {
       item_description: description,
       category_id: statusId,
     };
-    console.log(statusId);
 
     dispatch(
       taskFetcher(

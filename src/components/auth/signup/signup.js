@@ -8,7 +8,6 @@ import styles from './signup.module.css';
 
 const Signup = () => {
   const actionData = useActionData();
-  console.log(actionData);
 
   const navigation = useNavigation();
   const isSubmitting = navigation.state === 'submittin';

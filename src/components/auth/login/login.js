@@ -8,7 +8,6 @@ import styles from './login.module.css';
 
 const Login = () => {
   const actionData = useActionData();
-  console.log(actionData);
 
   const navigation = useNavigation();
   const isSubmitting = navigation.state === 'submittin';

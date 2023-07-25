@@ -11,8 +11,6 @@ import styles from './column.module.css';
 import { RiDeleteBin2Fill, RiEdit2Fill } from 'react-icons/ri';
 
 const Column = (props) => {
-  console.log(props);
-
   const [isEditable, setIsEditable] = useState(false);
   const [updatedTaskTitle, setUpdatedTaskTitle] = useState(
     props.status.charAt(0).toUpperCase() + props.status.slice(1)
