@@ -17,8 +17,12 @@
 .tasks-container::-webkit-scrollbar {
   height: 0.6em;
   border-radius: 10px;
-  background-color: #819abe65;
+  background-color: #819abe00;
 }
+.tasks-container::-webkit-scrollbar:hover {
+  background-color: #819abe00;
+}
+
 .tasks-container::-webkit-scrollbar-thumb {
   background-color: rgb(71, 129, 191);
   background-image: url(https://images.unsplash.com/photo-1540198163009-7afda7da2945?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=627&q=80);
