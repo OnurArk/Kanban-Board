@@ -1,8 +1,6 @@
 import { userAction } from '../slices/user-slice';
 
-import api from '../../components/ui/http/api';
-
-const { handleTokenRefreshAndRetry } = api();
+import { handleTokenRefreshAndRetry } from './task-action';
 
 export const reqUserList = () => {
   return async (dispatch) => {

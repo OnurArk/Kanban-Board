@@ -7,7 +7,6 @@ const { refreshToken } = api();
 
 const taskFetcher = (requestConfig, endpoint, sliceMethod) => {
   return async (dispatch) => {
-    console.log('b');
     try {
       const apiUrl = 'http://134.209.207.128/api/';
       const url = `${apiUrl}${endpoint ? `${endpoint}` : ''}`;
@@ -23,11 +22,11 @@ const taskFetcher = (requestConfig, endpoint, sliceMethod) => {
       const data = await response.json();
 
       if (response.status === 401) {
-        await handleTokenRefreshAndRetry(
+        return await handleTokenRefreshAndRetry(
           taskFetcher,
+          dispatch,
           requestConfig,
           endpoint,
-          dispatch,
           sliceMethod
         );
       }
@@ -76,19 +75,26 @@ const taskFetcher = (requestConfig, endpoint, sliceMethod) => {
   };
 };
 
-const handleTokenRefreshAndRetry = async (
+export const handleTokenRefreshAndRetry = async (
   retryFunction,
+  dispatch,
   requestConfig,
   endpoint,
-  dispatch,
   sliceMethod
 ) => {
-  console.log('a');
-
   try {
     const refreshedData = await refreshToken();
     if (refreshedData.redirect) {
+      // Redirect the user to the authentication page
       redirect('/authentication');
+    }
+
+    // Update the Authorization header in the requestConfig with the new access token
+    if (refreshedData.access) {
+      requestConfig.headers = {
+        ...requestConfig.headers,
+        Authorization: 'Bearer ' + refreshedData.access,
+      };
     }
 
     // Retry the original request with the updated access token

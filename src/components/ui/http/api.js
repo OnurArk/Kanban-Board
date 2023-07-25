@@ -67,6 +67,13 @@ const api = () => {
         redirect('/authentication');
       }
 
+      if (refreshedData.access) {
+        requestConfig.headers = {
+          ...requestConfig.headers,
+          Authorization: 'Bearer ' + refreshedData.access,
+        };
+      }
+
       // Retry the original request with the updated access token
       return await retryFunction(requestConfig, endpoint, sliceMethod);
     } catch (err) {
