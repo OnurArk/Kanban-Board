@@ -115,7 +115,7 @@ const AddTaskSection = () => {
               options
             ) : (
               <option value={'none'} className={styles.optns}>
-                Add Status First!
+                Add Status First !
               </option>
             )}
           </select>

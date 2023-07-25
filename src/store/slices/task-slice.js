@@ -9,15 +9,14 @@ const tasksSlice = createSlice({
   reducers: {
     getStatus(state, action) {
       const allStatus = action.payload;
-
+      console.log(allStatus);
       state.allStatus = Object.values(allStatus);
     },
     getTasks(state, action) {
       const tasks = action.payload;
-      console.log(tasks);
 
       // Separate tasks by category_id
-      state.tasksByCategory = Object.values(tasks).reduce((acc, task) => {
+      state.tasksByCategory = Object.values(tasks || []).reduce((acc, task) => {
         const categoryId = task.category_id;
         if (!acc[categoryId]) {
           acc[categoryId] = [];
