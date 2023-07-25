@@ -52,20 +52,14 @@ const api = () => {
   const handleTokenRefreshAndRetry = async (
     retryFunction,
     requestConfig,
-    endpoint,
-    sliceMethod
+    endpoint
   ) => {
-    console.log(retryFunction);
-    console.log(requestConfig);
-    console.log(endpoint);
-    console.log(sliceMethod);
-    console.log(await retryFunction(requestConfig, endpoint, sliceMethod));
-
     try {
       const refreshedData = await refreshToken();
       if (refreshedData.redirect) {
         redirect('/authentication');
       }
+      console.log(refreshedData);
 
       if (refreshedData.access) {
         requestConfig.headers = {
@@ -75,7 +69,7 @@ const api = () => {
       }
 
       // Retry the original request with the updated access token
-      return await retryFunction(requestConfig, endpoint, sliceMethod);
+      return await retryFunction(requestConfig, endpoint);
     } catch (err) {
       console.log(err.message);
       // Handle errors during token refresh or retry failure
