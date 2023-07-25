@@ -1,4 +1,5 @@
 .clock-container {
+  min-height: 7.5rem;
   padding: 0.5rem;
 
   display: flex;

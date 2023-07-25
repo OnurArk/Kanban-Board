@@ -1,9 +1,9 @@
 import React, { useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 import taskFetcher from '../../../store/actions/task-action';
 // import { v4 as uuidv4 } from 'uuid';
-
 import Input from '../../ui/input/input';
 import Button from '../../ui/button/button';
 
@@ -84,20 +84,30 @@ const AddTaskSection = () => {
 
   return (
     <form className={styles.container} onSubmit={submitHandler}>
-      <Input placeholder='Task Title' name='title' ref={titleRef} err={err}>
+      <Input
+        placeholder='Task Title'
+        name='title'
+        ref={titleRef}
+        invalid={err?.includes('title')}
+      >
         Title
       </Input>
       <Input
         placeholder='Task Description'
         name='description'
         ref={descriptionRef}
-        err={err}
+        invalid={err?.includes('description')}
       >
         Description
       </Input>
       <div className={styles.selectContainer}>
         <label htmlFor='status' className={styles.label}>
-          Status
+          <>
+            <p>Status</p>
+            <Link to={'?mode=adding-status'} className={styles.link}>
+              <h4 className={styles.addBtn}>+</h4>
+            </Link>
+          </>
         </label>
         <div className={styles.selectLayout}>
           <select className={styles.typeSelect} ref={statusRef} name='status'>

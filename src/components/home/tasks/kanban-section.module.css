@@ -1,15 +1,41 @@
 .tasks-container {
+  min-height: calc(100vh - 7rem - 7.5rem - 6.5rem);
   margin: 1.5rem;
-  padding: 0rem 2rem;
+  margin-bottom: 0;
+  padding: 0rem 2rem 5rem;
 
   display: flex;
-  justify-content: center;
   align-items: flex-start;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
+
   gap: 1rem;
 
+  overflow-x: scroll;
+
   color: black;
-  transition: all 0.4s ease;
 
   position: relative;
+}
+
+.tasks-container::-webkit-scrollbar {
+  height: 0.6em;
+  border-radius: 10px 10px 0 0;
+  background-color: #819abeb7;
+}
+.tasks-container::-webkit-scrollbar-thumb {
+  background-color: rgb(71, 129, 191);
+  background-image: url(https://images.unsplash.com/photo-1540198163009-7afda7da2945?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=627&q=80);
+  background-repeat: repeat;
+  background-position: 50% 37%;
+  border-radius: 10px 10px 0 0;
+}
+.tasks-container::-webkit-scrollbar-thumb:hover {
+  background-color: #3691bb;
+  background-position: 50% 40%;
+}
+
+@media (min-width: 600px) {
+  .tasks-container::-webkit-scrollbar {
+    height: 0.9em;
+  }
 }

@@ -57,18 +57,60 @@ export async function action({ request }) {
     }
 
     if (!confirmPassword || !password) {
-      toActionData.errMessage = 'You need to type!';
+      toActionData.errMessage = 'You need to type';
       toActionData.errType
         ? toActionData.errType.push('password')
         : (toActionData.errType = ['password']);
     }
 
     if (confirmPassword && password !== confirmPassword) {
-      toActionData.errMessage = 'Passwords did not match!';
+      toActionData.errMessage = 'Passwords did not match';
       toActionData.errType
         ? toActionData.errType.push('password')
         : (toActionData.errType = ['password']);
     }
+
+    function checkAndSetError(
+      toActionData,
+      field,
+      value,
+      maxLength,
+      errorMessage
+    ) {
+      if (!value) {
+        toActionData.errMessage = errorMessage;
+        toActionData.errType
+          ? toActionData.errType.push(field)
+          : (toActionData.errType = [field]);
+      } else if (value.length >= maxLength) {
+        toActionData.errMessage = `${field} should be at most ${maxLength} characters`;
+        toActionData.errType
+          ? toActionData.errType.push(field)
+          : (toActionData.errType = [field]);
+      }
+    }
+
+    checkAndSetError(
+      toActionData,
+      'firstName',
+      firstName,
+      15,
+      'Fill the first name'
+    );
+    checkAndSetError(
+      toActionData,
+      'lastName',
+      lastName,
+      15,
+      'Fill the last name'
+    );
+  }
+
+  if (!username) {
+    toActionData.errMessage = 'Fill the user name';
+    toActionData.errType
+      ? toActionData.errType.push('username')
+      : (toActionData.errType = ['username']);
   }
 
   if (typeof password !== 'string' || password.length < 6) {
@@ -107,6 +149,14 @@ export async function action({ request }) {
         toActionData.errMessage = data?.errMsg;
         return toActionData;
       }
+      if (data?.message && data?.status) {
+        toActionData.errMessage = data?.message;
+        toActionData.errType
+          ? toActionData.errType.push(data?.status)
+          : (toActionData.errType = [data?.status]);
+
+        return toActionData;
+      }
 
       toActionData.isSucceed = true;
       return redirect('/authentication');
@@ -131,7 +181,7 @@ export async function action({ request }) {
       );
 
       if (data?.errMsg) {
-        toActionData.errMessage = data?.errMsg;
+        toActionData.errMessage = 'Check your User Name and Password again';
         return toActionData;
       }
 
@@ -161,6 +211,6 @@ export async function action({ request }) {
     }
   }
 
-  // // default behavier
-  // return redirect('/authentication');
+  // default behavier
+  return redirect('/authentication');
 }

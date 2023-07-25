@@ -14,11 +14,11 @@ const Input = forwardRef((props, ref) => {
         value={props?.value}
         placeholder={props.placeholder}
         className={`${props.className} ${styles.input} ${
-          props?.err && props.err.includes(props.name) ? styles.invalid : ''
+          props?.invalid ? styles.invalid : ''
         }`}
         name={props?.name}
       />
-      {props?.err && props?.err.includes(props?.name) ? (
+      {props?.errMsg ? (
         <p className={styles.err}>
           {props?.errMsg ? props?.errMsg : `You should fill the ${props.name}`}
         </p>

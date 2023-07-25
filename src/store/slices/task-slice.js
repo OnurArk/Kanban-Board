@@ -28,7 +28,7 @@ const tasksSlice = createSlice({
 
       // Sort tasks for category by order_id
       Object.values(state.tasksByCategory).forEach((categoryTasks) => {
-        categoryTasks.sort((a, b) => a.order_id - b.order_id);
+        categoryTasks?.sort((a, b) => a.order_id - b.order_id);
       });
     },
     updateTasks(state, action) {
@@ -40,21 +40,32 @@ const tasksSlice = createSlice({
         1
       )[0];
 
-      if (sourceId === destinationId) {
-        // if status of source and destination are the same no need to delete
-        state.tasksByCategory[destinationId].splice(
-          destinationIndex,
-          0,
-          movedTask
-        );
-      } else {
-        // adding new position the removed task
-        state.tasksByCategory[destinationId].splice(
-          destinationIndex,
-          0,
-          movedTask
-        );
-      }
+      // if (sourceId === destinationId) {
+      //   // if status of source and destination are the same no need to delete
+      //   state.tasksByCategory[destinationId]?.splice(
+      //     destinationIndex,
+      //     0,
+      //     movedTask
+      //   );
+      // } else {
+      //   console.log(JSON.parse(JSON.stringify(state.tasksByCategory)));
+      //   console.log(state.tasksByCategory[destinationId]);
+
+      //   // adding new position the removed task
+      //   if (state.tasksByCategory[destinationId]) {
+      //     state.tasksByCategory[destinationId]?.splice(
+      //       destinationIndex,
+      //       0,
+      //       movedTask
+      //     );
+      //   } else {
+      //     state.tasksByCategory.destinationId = movedTask;
+      //   }
+      // }
+
+      // Object.values(state.tasksByCategory).forEach((categoryTasks) => {
+      //   categoryTasks.sort((a, b) => a.order_id - b.order_id);
+      // });
     },
   },
 });

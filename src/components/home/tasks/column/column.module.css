@@ -1,6 +1,6 @@
 .tasks-container {
   padding: 0.4rem;
-  min-width: 270px;
+  min-width: 300px;
   max-width: 500px;
 
   flex: 1;
@@ -8,6 +8,9 @@
 
   background-color: rgba(240, 248, 255, 0.424);
   transition: all 0.4s ease-in-out;
+  color: aliceblue;
+
+  position: relative;
 }
 
 .tasks-container:hover {
@@ -16,7 +19,58 @@
 
 .mainTitle {
   margin-bottom: 0.8rem;
-  color: aliceblue;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+
+  cursor: pointer;
+}
+
+.delete-container {
+  padding: 0.5rem;
+
+  display: flex;
+  justify-content: center;
+
+  flex-wrap: wrap;
+  gap: 1rem;
+
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.bin {
+  color: rgb(217, 12, 12);
+  font-size: 1.1rem;
+
+  cursor: pointer;
+}
+
+.edit {
+  color: rgb(253, 253, 253);
+  font-size: 1.1rem;
+
+  cursor: pointer;
+}
+
+.textarea {
+  border: none;
+  background-color: transparent;
+  resize: none;
+
+  width: 95%;
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
+  padding: 0;
+  /* Set box-sizing to border-box to include padding in the height calculation */
+  box-sizing: border-box;
+  /* Remove vertical scrollbar */
+  scrollbar-width: none;
+  /* Hide scrollbar in Firefox */
+  -ms-overflow-style: none;
 }
 
 .tasks {
@@ -29,5 +83,4 @@
 
   text-align: left;
   background-color: #175ffaa3;
-  color: aliceblue;
 }

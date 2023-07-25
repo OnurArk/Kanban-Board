@@ -11,10 +11,6 @@ const AddStatus = () => {
 
   return (
     <>
-      <Link to={'?mode=adding-status'} className={styles.addStatus}>
-        <h4 className={styles.addBtn}>+Add Status</h4>
-      </Link>
-
       {isAdding && (
         <>
           <Link to={'/home'} className={styles.span} />

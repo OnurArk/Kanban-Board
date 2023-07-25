@@ -1,5 +1,6 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+
 import { DragDropContext } from 'react-beautiful-dnd';
 
 import taskFetcher from '../../../store/actions/task-action';
@@ -18,10 +19,8 @@ const KanbanSection = () => {
 
   const onDragEnd = (result) => {
     const { source, destination } = result;
-    console.log(source); // {index: çıktığı index,droppableId: çıktığı statusId }
-    console.log(destination); // {index: geldiği index,droppableId: geldiği statusId }
-    console.log(tasksByCategory);
-    console.log(tasksByCategory[source.droppableId][source.index]);
+    // console.log(source); // {index: çıktığı index,droppableId: çıktığı statusId }
+    // console.log(destination); // {index: geldiği index,droppableId: geldiği statusId }
 
     if (!destination) return;
     //tasksByCategory use this to update and post again
@@ -42,7 +41,7 @@ const KanbanSection = () => {
           body: {
             ...simpleTask,
             order_id: destination.index + 1,
-            category_id: destination.droppableId,
+            category_id: +destination.droppableId,
           },
           headers: {
             Authorization: 'Bearer ' + localStorage.getItem('accessToken'),
@@ -69,13 +68,14 @@ const KanbanSection = () => {
       id={status.id}
       key={status.id}
       tasks={tasksByCategory[status.id] || []}
+      orderId={status.order_id}
     />
   ));
 
   return (
     <div className={styles['tasks-container']}>
-      <AddStatus />
       <DragDropContext onDragEnd={onDragEnd}>{columns}</DragDropContext>
+      <AddStatus />
     </div>
   );
 };

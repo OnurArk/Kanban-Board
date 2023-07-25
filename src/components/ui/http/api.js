@@ -23,6 +23,10 @@ const api = () => {
         throw new Error('This Email already exist');
       }
 
+      if (response.status === 406) {
+        return { message: data.message, status: response.status };
+      }
+
       if (!response.ok) {
         throw new Error(response.statusText);
       }

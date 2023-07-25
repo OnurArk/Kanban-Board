@@ -25,6 +25,19 @@ const taskFetcher = (requestConfig, endpoint, sliceMethod) => {
         dispatch(tasksAction.getStatus(data.categories));
       }
 
+      if (sliceMethod && sliceMethod === 'refetchStatus') {
+        dispatch(
+          taskFetcher(
+            {
+              headers: {
+                Authorization: 'Bearer ' + localStorage.getItem('accessToken'),
+              },
+            },
+            'category/list/',
+            'getStatus'
+          )
+        );
+      }
       if (!sliceMethod || sliceMethod !== 'getTasks') {
         dispatch(
           taskFetcher(

@@ -21,8 +21,11 @@ const Login = () => {
         name='username'
         type='text'
         placeholder='User Name'
-        err={actionData?.errType}
-        errMsg={actionData?.errMessage}
+        invalid={
+          actionData?.errType &&
+          (actionData.errType.includes('username') ||
+            actionData.errType.includes(406))
+        }
         autoComplete='username'
       >
         User Name
@@ -31,8 +34,7 @@ const Login = () => {
         type='password'
         name='password'
         placeholder='At least 6 characters'
-        err={actionData?.errType}
-        errMsg={actionData?.errMessage}
+        invalid={actionData?.errType?.includes('password') ? true : false}
         autoComplete='current-password'
       >
         Password
@@ -45,6 +47,9 @@ const Login = () => {
           {isSubmitting ? 'Submitting...' : 'Login'}
         </Button>
       </div>
+      {actionData && actionData?.errMessage && (
+        <p className={styles.err}>{actionData.errMessage}!</p>
+      )}
     </Form>
   );
 };

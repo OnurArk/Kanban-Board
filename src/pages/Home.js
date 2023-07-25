@@ -11,6 +11,7 @@ import Clock from '../components/home/clock/clock';
 import KanbanSection from '../components/home/tasks/kanban-section';
 
 import styles from '../styles/Home.module.css';
+import AddStatus from '../components/home/tasks/add-status/add-status';
 
 const Home = () => {
   const dispatch = useDispatch();
