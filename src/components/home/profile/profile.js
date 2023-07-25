@@ -57,6 +57,12 @@ const Profile = () => {
     }
   }, [ui]);
 
+  const logoutHandler = () => {
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('refreshToken');
+    localStorage.removeItem('username');
+  };
+
   return (
     <div
       className={`${styles['profile-container']} ${
@@ -102,6 +108,10 @@ const Profile = () => {
 
           <Link to={'?mode=profile&nav=delete'}>
             <Button className={styles.btnDelete}>Delete</Button>
+          </Link>
+
+          <Link to={'/authentication'}>
+            <Button onClick={logoutHandler}>Logout</Button>
           </Link>
 
           {isChangingPassword && <ChangePassword ui={ui} username={username} />}

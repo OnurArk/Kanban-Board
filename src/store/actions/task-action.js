@@ -1,7 +1,13 @@
 import { tasksAction } from '../slices/task-slice';
 
+import api from '../../components/ui/http/api';
+
+const { handleTokenRefreshAndRetry } = api();
+
 const taskFetcher = (requestConfig, endpoint, sliceMethod) => {
   return async (dispatch) => {
+    console.log('a');
+
     try {
       const apiUrl = 'http://134.209.207.128/api/';
       const url = `${apiUrl}${endpoint ? `${endpoint}` : ''}`;
@@ -16,8 +22,18 @@ const taskFetcher = (requestConfig, endpoint, sliceMethod) => {
 
       const data = await response.json();
       console.log(data);
+      console.log(response);
 
-      if (!response.ok) {
+      if (response.status === 401) {
+        return await handleTokenRefreshAndRetry(
+          taskFetcher,
+          requestConfig,
+          endpoint,
+          sliceMethod
+        );
+      }
+
+      if (!response.ok && response.status !== 401) {
         throw new Error(response.statusMessage);
       }
 

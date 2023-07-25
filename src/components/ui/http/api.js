@@ -1,3 +1,5 @@
+import { redirect } from 'react-router-dom';
+
 const api = () => {
   const requestFetch = async (requestConfig, endpoint) => {
     try {
@@ -16,7 +18,15 @@ const api = () => {
       console.log(data);
 
       if (response.status === 401) {
-        throw new Error('No active account found with the given credentials');
+        if (data.code === 'token_not_valid') {
+          return await handleTokenRefreshAndRetry(
+            requestFetch,
+            requestConfig,
+            endpoint
+          );
+        } else {
+          throw new Error('No active account found with the given credentials');
+        }
       }
 
       if (response.status === 422) {
@@ -39,6 +49,33 @@ const api = () => {
     }
   };
 
+  const handleTokenRefreshAndRetry = async (
+    retryFunction,
+    requestConfig,
+    endpoint,
+    sliceMethod
+  ) => {
+    console.log(retryFunction);
+    console.log(requestConfig);
+    console.log(endpoint);
+    console.log(sliceMethod);
+    console.log(await retryFunction(requestConfig, endpoint, sliceMethod));
+
+    try {
+      const refreshedData = await refreshToken();
+      if (refreshedData.redirect) {
+        redirect('/authentication');
+      }
+
+      // Retry the original request with the updated access token
+      return await retryFunction(requestConfig, endpoint, sliceMethod);
+    } catch (err) {
+      console.log(err.message);
+      // Handle errors during token refresh or retry failure
+      return { errMsg: err.message };
+    }
+  };
+
   const refreshToken = async () => {
     try {
       const refreshToken = localStorage.getItem('refreshToken');
@@ -52,10 +89,16 @@ const api = () => {
       });
 
       if (!response.ok) {
+        localStorage.removeItem('accessToken');
+        localStorage.removeItem('refreshToken');
+        localStorage.removeItem('username');
         throw new Error(response.status);
       }
 
       const data = await response.json();
+
+      localStorage.setItem('accessToken', data.access);
+      localStorage.setItem('refreshToken', data.refresh);
 
       return data;
     } catch (err) {
@@ -63,7 +106,7 @@ const api = () => {
     }
   };
 
-  return { requestFetch, refreshToken };
+  return { requestFetch, refreshToken, handleTokenRefreshAndRetry };
 };
 
 export default api;

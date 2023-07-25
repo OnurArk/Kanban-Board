@@ -11,7 +11,6 @@ import Clock from '../components/home/clock/clock';
 import KanbanSection from '../components/home/tasks/kanban-section';
 
 import styles from '../styles/Home.module.css';
-import AddStatus from '../components/home/tasks/add-status/add-status';
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -35,15 +34,10 @@ const Home = () => {
       const response = await refreshToken();
       console.log(response);
       if (response && response?.redirect) {
-        localStorage.setItem('accessToken', null);
-        localStorage.setItem('refreshToken', null);
-        localStorage.setItem('username', null);
         navigate('/authentication');
       }
 
       if (response && response.access) {
-        localStorage.setItem('accessToken', response.access);
-        localStorage.setItem('refreshToken', response.refresh);
         dispatch(
           taskFetcher(
             {
@@ -68,9 +62,10 @@ const Home = () => {
     const accessToken = localStorage.getItem('accessToken');
 
     if (!accessToken) {
-      localStorage.setItem('accessToken', null);
-      localStorage.setItem('refreshToken', null);
-      localStorage.setItem('username', null);
+      localStorage.removeItem('accessToken');
+      localStorage.removeItem('refreshToken');
+      localStorage.removeItem('username');
+
       navigate('/authentication');
     } else {
       const isAccessTokenExpired = isTokenExpired(accessToken);

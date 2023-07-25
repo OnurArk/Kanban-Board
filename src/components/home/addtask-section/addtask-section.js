@@ -3,16 +3,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import taskFetcher from '../../../store/actions/task-action';
-// import { v4 as uuidv4 } from 'uuid';
+
 import Input from '../../ui/input/input';
 import Button from '../../ui/button/button';
 
 import styles from './addtask-section.module.css';
 import { HiOutlineChevronDoubleDown } from 'react-icons/hi';
-
-// function generateRandomId() {
-//   return uuidv4();
-// }
 
 const AddTaskSection = () => {
   const [err, setErr] = useState(null);
@@ -131,22 +127,3 @@ const AddTaskSection = () => {
 };
 
 export default AddTaskSection;
-
-// // produce id for each task
-// const randomId = generateRandomId();
-
-// // produce random task background
-// const letters = '0123456789ABCDEF';
-// let color = '#';
-// for (let i = 0; i < 6; i++) {
-//   color += letters[Math.floor(Math.random() * 16)];
-// }
-
-// // determine text color and title color based on background color brightness
-// const brightnessThreshold = 128;
-// const r = parseInt(color.substring(1, 3), 16);
-// const g = parseInt(color.substring(3, 5), 16);
-// const b = parseInt(color.substring(5, 7), 16);
-// const brightness = (r * 299 + g * 587 + b * 114) / 1000;
-
-// const textColor = brightness > brightnessThreshold ? '#000000' : '#FFFFFF';
