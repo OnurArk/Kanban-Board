@@ -90,9 +90,9 @@ export const handleTokenRefreshAndRetry = async (
     }
 
     // Update the Authorization header in the requestConfig with the new access token
-    if (refreshedData.access) {
+    if (refreshedData.access && requestConfig.headers) {
       requestConfig.headers = {
-        ...requestConfig.headers,
+        ...requestConfig?.headers,
         Authorization: 'Bearer ' + refreshedData.access,
       };
     }

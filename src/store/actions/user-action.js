@@ -16,7 +16,7 @@ export const reqUserList = () => {
       });
 
       if (response.status === 401) {
-        return await handleTokenRefreshAndRetry(reqUserList);
+        return await handleTokenRefreshAndRetry(reqUserList, dispatch);
       }
 
       if (!response.ok) {
