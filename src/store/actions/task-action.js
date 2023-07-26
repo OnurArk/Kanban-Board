@@ -1,5 +1,4 @@
 import { tasksAction } from '../slices/task-slice';
-import { redirect } from 'react-router-dom';
 
 import api from '../../components/ui/http/api';
 
@@ -86,7 +85,9 @@ export const handleTokenRefreshAndRetry = async (
     const refreshedData = await refreshToken();
     if (refreshedData.redirect) {
       // Redirect the user to the authentication page
-      redirect('/authentication');
+      console.log(refreshedData);
+      window.location.assign('/authentication');
+      return;
     }
 
     // Update the Authorization header in the requestConfig with the new access token

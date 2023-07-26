@@ -1,5 +1,3 @@
-import { redirect } from 'react-router-dom';
-
 const api = () => {
   const requestFetch = async (requestConfig, endpoint) => {
     try {
@@ -57,7 +55,8 @@ const api = () => {
     try {
       const refreshedData = await refreshToken();
       if (refreshedData.redirect) {
-        redirect('/authentication');
+        window.location.assign('/authentication');
+        return;
       }
       console.log(refreshedData);
 
@@ -97,6 +96,7 @@ const api = () => {
       }
 
       const data = await response.json();
+      console.log(data);
 
       localStorage.setItem('accessToken', data.access);
       localStorage.setItem('refreshToken', data.refresh);
